@@ -880,7 +880,7 @@ flowchart TD
   <div id="vtoast" role="status" aria-live="polite" hidden></div>
   <footer class="disclaimer">
     <p>本書の表5.1（超知能（ASI）の有無・人類の存在・誰が制御するか）の区分に沿って、判断の順に12シナリオを並べたもの。丸数字は第5章での登場順、「≒」は日本人向けの喩え。シナリオのボックスをクリックすると、ページ下部の該当する解説へ移動する。赤枠の分岐点は、ダリオ・アモデイ氏のエッセイ<a href="https://darioamodei.com/post/we-must-pace-the-frontier" target="_blank" rel="noopener">「We Must Pace the Frontier」</a>が直接扱っている判断で、付箋から解説へ移動できる。付箋の写真のクレジットはページ下部「参考資料」に記載。アモデイ氏の写真は <a href="https://commons.wikimedia.org/wiki/File:Dario_Amodei_at_TechCrunch_Disrupt_2023_01_(cropped_2).jpg" target="_blank" rel="noopener">TechCrunch撮影（Wikimedia Commons）</a>、<a href="https://creativecommons.org/licenses/by/2.0/" target="_blank" rel="noopener">CC BY 2.0</a>、トリミングして使用。</p>
-    <p>各解説・要約はこのページ作成者によるもので、原文の主張の順序・強調は必ずしも同じではありません。「世界の読者はどの未来を選んだか」の数値はFLI公開グラフからの概算で公式集計ではありません。「あなたはどれを選ぶ？」の投票は匿名で、保存するのは選択した2つの番号・投票時刻・重複防止用にハッシュ化した接続元情報のみです。「意見を送る」で保存するのは、選んだシナリオ・本文・ニックネーム（任意）・送信時刻・重複防止用にハッシュ化した接続元情報のみで、運営者が確認したものだけを「日本の読者はこう語った」に掲載します（掲載後の取り下げも意見フォームから受け付けます）。「海外の読者はこう語った」は公開投稿の趣旨を紹介目的で要約したもので、原文の転載・逐語訳ではなく、各投稿者の見解はこのページの見解ではありません。掲載に問題がある場合は意見フォームからお知らせください。著者・研究者の肖像はいずれもWikimedia Commonsで確認したCCライセンスの写真をトリミングして使用しています（クレジットは各カードに記載）。</p>
+    <p>各解説・要約はこのページ作成者によるもので、原文の主張の順序・強調は必ずしも同じではありません。「世界の読者はどの未来を選んだか」の数値はFLI公開グラフからの概算で公式集計ではありません。「あなたはどれを選ぶ？」の投票は匿名で、保存するのは選択した2つの番号・投票時刻・重複防止用にハッシュ化した接続元情報と、投票を変更した場合の変更前後の番号・操作した場所・流入元の種別（X、note、検索など。個別のURLは保存しません）・国・端末種別（スマホ／PC）です。「意見を送る」で保存するのは、選んだシナリオ・本文・ニックネーム（任意）・送信時刻・重複防止用にハッシュ化した接続元情報のみで、運営者が確認したものだけを「日本の読者はこう語った」に掲載します（掲載後の取り下げも意見フォームから受け付けます）。「海外の読者はこう語った」は公開投稿の趣旨を紹介目的で要約したもので、原文の転載・逐語訳ではなく、各投稿者の見解はこのページの見解ではありません。掲載に問題がある場合は意見フォームからお知らせください。著者・研究者の肖像はいずれもWikimedia Commonsで確認したCCライセンスの写真をトリミングして使用しています（クレジットは各カードに記載）。</p>
   </footer>
 </div>
 <script>
@@ -1018,6 +1018,16 @@ flowchart TD
   var CIRC=['','①','②','③','④','⑤','⑥','⑦','⑧','⑨','⑩','⑪','⑫'];
   var COL={t:'var(--thrive)',n:'var(--none)',g:'var(--gone)'};
   var LIVE=(location.hostname==='12futures.jp');
+  // 流入元（ドメイン単位）と utm を控えておく（投票の変更履歴の分析用。生URLは送らない）
+  var SRC=(function(){
+    try{ var c=sessionStorage.getItem('v12src'); if(c) return JSON.parse(c); }catch(e){}
+    var ref='direct';
+    try{ if(document.referrer){ var h=new URL(document.referrer).hostname.replace(/^www\./,''); if(h===location.hostname) ref='internal'; else if(/(^|\.)t\.co$|(^|\.)x\.com$|twitter\.com$/.test(h)) ref='x'; else if(/note\.com$|note\.mu$/.test(h)) ref='note'; else if(/google\./.test(h)) ref='google'; else if(/bing\.com$/.test(h)) ref='bing'; else if(/yahoo\./.test(h)) ref='yahoo'; else if(/facebook\.com$|fb\.com$/.test(h)) ref='facebook'; else if(/instagram\.com$/.test(h)) ref='instagram'; else if(/threads\.net$|threads\.com$/.test(h)) ref='threads'; else if(/reddit\.com$/.test(h)) ref='reddit'; else if(/hatena\.ne\.jp$|hatenablog/.test(h)) ref='hatena'; else if(/chatgpt\.com$|openai\.com$/.test(h)) ref='chatgpt'; else if(/perplexity\.ai$/.test(h)) ref='perplexity'; else if(/claude\.ai$/.test(h)) ref='claude'; else ref=h.slice(0,40); } }catch(e){}
+    var q=new URLSearchParams(location.search), utm=['utm_source','utm_medium','utm_campaign'].map(function(k){return q.get(k)||'';}).join('|').replace(/\|+$/,'');
+    var o={ref:ref, utm:utm};
+    try{ sessionStorage.setItem('v12src', JSON.stringify(o)); }catch(e){}
+    return o;
+  })();
   var $=function(id){ return document.getElementById(id); };
   var res=$('vres'), go=$('vgo'), msg=$('vmsg'), bar=$('vbar'), toastEl=$('vtoast');
   if(!go) return;
@@ -1058,11 +1068,12 @@ flowchart TD
       bars($('cw'), d.want, d.total, mine.want, true); bars($('cl'), d.likely, d.total, mine.likely, false);
     }).catch(function(){ $('vn1').textContent='（集計を取得できませんでした）'; });
   }
-  function submit(fromCard){
+  function submit(source){
+    var fromCard=(source!=='vote');
     if(!(pick.w&&pick.l)||busy) return;
     if(!LIVE){ toast('投票は公開サイト（12futures.jp）で受け付けています'); return; }
     busy=true; msg.textContent='送信中…';
-    fetch('/api/vote',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({want:pick.w,likely:pick.l})})
+    fetch('/api/vote',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({want:pick.w,likely:pick.l,source:source,ref:SRC.ref,utm:SRC.utm})})
       .then(function(r){ return r.json().then(function(j){ return {s:r.status,j:j}; }); })
       .then(function(x){
         busy=false;
@@ -1085,15 +1096,15 @@ flowchart TD
     b.addEventListener('click', function(){
       var q=b.getAttribute('data-q'), v=+b.getAttribute('data-v'); var isCard=b.classList.contains('cv');
       pick[q]=v; sync();
-      if(voted){ submit(isCard); return; }
+      if(voted){ submit(isCard?'card':'vote'); return; }
       if(isCard){
         if(pick.w&&pick.l){ toast('🗳 2つ選びました。画面下の「投票する」で確定できます', 3200); }
         else { toast((q==='w'?'🙏 望む未来':'🔮 来そうな未来')+'に '+name(v)+' を選びました。あと '+(q==='w'?'🔮 来そうな未来':'🙏 望む未来')+' を選んでください', 3200); }
       }
     });
   });
-  go.addEventListener('click', function(){ submit(false); });
-  $('vb-go').addEventListener('click', function(){ submit(true); });
+  go.addEventListener('click', function(){ submit('vote'); });
+  $('vb-go').addEventListener('click', function(){ submit('bar'); });
   // restore
   var prev=store(); if(prev&&prev.want&&prev.likely){ voted=prev; pick.w=prev.want; pick.l=prev.likely; showResults(prev); }
   sync();
