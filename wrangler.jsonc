@@ -11,6 +11,10 @@
   "d1_databases": [
     { "binding": "DB", "database_name": "life30-votes", "database_id": "b026b4b5-69ec-4498-930a-678ececf4353" }
   ],
-  "vars": { "IP_SALT": "12futures-2026-09" },
+  "vars": {
+    "IP_SALT": "12futures-2026-09",
+    "ACCESS_TEAM_DOMAIN": "throbbing-breeze-7a00.cloudflareaccess.com",
+    "ACCESS_AUD": "0b628ffc4cfa6d5a16a77c843dc5881f815f3c1ffb78a64980b509e820bd8b2d"
+  },
   "observability": { "enabled": true, "logs": { "enabled": true } }
 }
