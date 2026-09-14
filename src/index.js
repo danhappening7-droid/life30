@@ -81,6 +81,24 @@ async function handleResults(request, env, ctx) {
   return res;
 }
 
+// ---------- vote events (append-only change log) ----------
+const SRC_OK = new Set(["vote", "card", "bar"]);
+function cleanRef(s) { s = String(s || "").toLowerCase().replace(/[^a-z0-9._-]/g, "").slice(0, 40); return s || null; }
+function cleanUtm(s) { s = String(s || "").replace(/[^\w.\-\/|]/g, "").slice(0, 80); return s || null; }
+function deviceOf(request) { const ua = request.headers.get("user-agent") || ""; return /Mobi|Android|iPhone|iPad/i.test(ua) ? "mobile" : "desktop"; }
+async function logVoteEvent(env, ctx, request, body, ev) {
+  try {
+    const stmt = env.DB.prepare(
+      "INSERT INTO vote_events (id, vote_id, kind, prev_want, prev_likely, want, likely, source, ref, utm, country, device, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+    ).bind(
+      crypto.randomUUID(), ev.vote_id, ev.kind, ev.prev_want ?? null, ev.prev_likely ?? null, ev.want, ev.likely,
+      SRC_OK.has(body.source) ? body.source : null, cleanRef(body.ref), cleanUtm(body.utm),
+      (request.cf && request.cf.country) || null, deviceOf(request), Math.floor(Date.now() / 1000)
+    );
+    ctx.waitUntil(stmt.run());
+  } catch (e) { /* ログ失敗は投票を妨げない */ }
+}
+
 // ---------- vote ----------
 export async function handleVote(request, env, ctx) {
   if (request.method !== "POST") return json({ error: "method" }, 405);
@@ -96,7 +114,9 @@ export async function handleVote(request, env, ctx) {
   if (cookies[COOKIE]) {
     const prev = await env.DB.prepare("SELECT want, likely FROM votes WHERE id = ?").bind(cookies[COOKIE]).first();
     if (prev) {
+      const changed = (prev.want !== want || prev.likely !== likely);
       await env.DB.prepare("UPDATE votes SET want = ?, likely = ? WHERE id = ?").bind(want, likely, cookies[COOKIE]).run();
+      if (changed) await logVoteEvent(env, ctx, request, body, { vote_id: cookies[COOKIE], kind: "change", prev_want: prev.want, prev_likely: prev.likely, want, likely });
       ctx.waitUntil(caches.default.delete(new Request(ORIGIN + "/api/results", { method: "GET" })));
       return json({ ok: true, updated: true, id: cookies[COOKIE], want, likely, prev: { want: prev.want, likely: prev.likely } });
     }
@@ -111,6 +131,7 @@ export async function handleVote(request, env, ctx) {
   const id = crypto.randomUUID();
   await env.DB.prepare("INSERT INTO votes (id, want, likely, ip_hash, created_at) VALUES (?, ?, ?, ?, ?)")
     .bind(id, want, likely, ip_hash, now).run();
+  await logVoteEvent(env, ctx, request, body, { vote_id: id, kind: "new", want, likely });
   ctx.waitUntil(caches.default.delete(new Request(ORIGIN + "/api/results", { method: "GET" })));
 
   const cookie = `${COOKIE}=${id}; Path=/; Max-Age=31536000; Secure; HttpOnly; SameSite=Lax`;
