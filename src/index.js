@@ -144,7 +144,7 @@ export function sharePage(want, likely) {
   const title = `私が望む未来は「${W.name}」、来そうな未来は「${L.name}」`;
   const desc = `『LIFE 3.0』の12の未来から選びました。あなたはどれを選ぶ？ — 12の未来へ、私たちはどこに向かうのか（12futures.jp）`;
   const url = `${ORIGIN}/r/${want}-${likely}`;
-  const img = `${ORIGIN}/og/w${want}.png`;
+  const img = `${ORIGIN}/og/w${want}-l${likely}.jpg`;
   const col = { t: "#1C7C74", n: "#5B6B7F", g: "#9E3A2F" };
   const bg = { t: "#E0F1EE", n: "#E6EAEF", g: "#F6E4E1" };
   const tile = (label, S, kind) => `
