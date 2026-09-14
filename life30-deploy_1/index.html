@@ -258,6 +258,47 @@
   .card .links .opinion { margin-top: 0; }
   .vlink { display: inline-block; width: fit-content; font-size: 13px; font-weight: 700; color: var(--decide); background: var(--paper); border: 1.5px solid var(--decide); border-radius: 999px; padding: 5px 13px; text-decoration: none; }
   .vlink:hover { background: #FFF6C9; }
+
+  /* 投票 */
+  .vote { margin-top: 48px; }
+  .vote .lede { margin-bottom: 14px; }
+  .vbox { background: var(--paper); border: 2px solid var(--decide); border-radius: 12px 4px 10px 5px / 5px 10px 4px 12px; padding: 18px 20px 20px; scroll-margin-top: 16px; }
+  .vq { margin-top: 14px; }
+  .vq h3 { font-family: "Yomogi", "Klee One", "Hiragino Maru Gothic ProN", sans-serif; font-size: 19px; margin: 0 0 4px; }
+  .vq .hint { font-size: 12.5px; color: var(--muted); margin: 0 0 8px; }
+  .picks { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 6px; }
+  .pick { font: inherit; font-size: 13px; font-weight: 700; text-align: left; line-height: 1.3; padding: 7px 10px; border-radius: 8px; background: var(--paper); border: 1.5px solid var(--line); border-left-width: 5px; color: var(--ink); cursor: pointer; }
+  .pick.t { border-left-color: var(--thrive); } .pick.n { border-left-color: var(--none); } .pick.g { border-left-color: var(--gone); }
+  .pick:hover { background: #FFF6C9; }
+  .pick[aria-pressed="true"] { background: var(--decide); color: #fff; border-color: var(--decide); }
+  .pick small { display: block; font-weight: 400; font-size: 11px; opacity: .8; }
+  .vsubmit { margin-top: 16px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .vsubmit button { font: inherit; font-size: 15px; font-weight: 700; color: #fff; background: var(--decide); border: 0; border-radius: 999px; padding: 10px 22px; cursor: pointer; }
+  .vsubmit button:disabled { background: #B9B3A4; cursor: not-allowed; }
+  .vsubmit .msg { font-size: 13px; color: var(--muted); }
+  .vsubmit .msg.err { color: #9E3A2F; font-weight: 700; }
+  .vres { margin-top: 14px; }
+  .vres .you { background: #E8F0F7; border-left: 4px solid var(--decide); padding: 10px 14px; margin-bottom: 12px; font-size: 14.5px; }
+  .vres .you b { font-size: 16px; }
+  .vgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .vchart h4 { font-family: "Yomogi", "Klee One", "Hiragino Maru Gothic ProN", sans-serif; font-size: 16px; margin: 0 0 6px; }
+  .vchart h4 small { font-family: "Klee One", sans-serif; font-weight: 400; font-size: 12px; color: var(--muted); margin-left: 6px; }
+  .vbars { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 5px; }
+  .vbars li { display: grid; grid-template-columns: minmax(110px, 150px) 1fr 3em; align-items: center; gap: 8px; font-size: 12.5px; }
+  .vbars .lab { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .vbars .track { position: relative; height: 12px; background: rgba(27,36,48,.06); border-radius: 0 4px 4px 0; }
+  .vbars .fill { position: absolute; left: 0; top: 0; bottom: 0; min-width: 2px; border-radius: 0 4px 4px 0; background: var(--c); }
+  .vbars .fli { position: absolute; top: -3px; bottom: -3px; width: 2px; background: #C9A227; }
+  .vbars .val { font-variant-numeric: tabular-nums; text-align: right; }
+  .vbars li.me .lab { color: var(--decide); font-weight: 700; }
+  .vbars li.me .track { outline: 2px solid var(--decide); outline-offset: 1px; }
+  .vnote { font-size: 12px; color: var(--muted); margin: 10px 0 0; }
+  .vnote i { display: inline-block; width: 10px; height: 2px; background: #C9A227; vertical-align: middle; margin: 0 4px 2px 0; }
+  .vshare { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; align-items: center; }
+  .vshare a, .vshare button { font: inherit; font-size: 13.5px; font-weight: 700; text-decoration: none; border-radius: 999px; padding: 8px 16px; cursor: pointer; border: 1.5px solid var(--ink); background: var(--paper); color: var(--ink); }
+  .vshare a.x { background: #1B2430; color: #fff; }
+  .vshare .copied { font-size: 12.5px; color: var(--muted); }
+  @media (max-width: 720px) { .vgrid { grid-template-columns: 1fr; } .vbox { padding: 14px 14px 16px; } .picks { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); } }
 </style>
 
 <div class="wrap">
@@ -372,6 +413,7 @@ flowchart TD
       <h3>あなたの意見を聞かせてください</h3>
       <p>12のシナリオのどれについてでも構いません。「この未来は案外ありそう」「この喩えは違う」「自分ならこの枝を選ぶ」など、ひとことでも歓迎です。各シナリオの解説カードの末尾にある「意見を送る」から、そのシナリオを選んだ状態でフォームが開きます。</p>
       <p class="note">いただいたコメントは、運営側が内容を確認したうえで、このページに掲載することがあります（掲載を希望しない場合はフォームでその旨を選べます）。本名や連絡先など個人が特定できる情報は書かないでください。掲載にあたって、表記の統一や誤字の修正など、趣旨を変えない範囲で手を加える場合があります。</p>
+      <a class="vlink" href="#vote" style="margin-right:8px">🗳 望む未来・来そうな未来に投票する</a>
       <a class="vlink" href="#voices" style="margin-right:8px">🌏 海外の読者の声を読む</a>
       <a class="opinion big" data-scenario="全体について" href="#opinion" target="_blank" rel="noopener">✉ 全体についての意見を送る（Googleフォームが開きます）</a>
     </aside>
@@ -496,6 +538,53 @@ flowchart TD
       
         <div class="links"><a class="opinion" data-scenario="⑫ 自滅" href="#opinion" target="_blank" rel="noopener">✉ このシナリオについて意見を送る</a><a class="vlink" href="#v12">🌏 海外の読者の声（2件）</a></div>
       </article>
+    </div>
+  </section>
+
+  <section class="vote" id="vote" aria-label="投票">
+    <h2>あなたはどれを選ぶ？</h2>
+    <p class="lede">12のシナリオから、<b>「望む未来」</b>と<b>「来そうな未来」</b>を1つずつ選んでください。匿名・登録不要・1人1回。投票するとこのサイトの読者全体の分布が見られ、FLI（世界の読者）の結果とも比べられます。結果は X で共有できます。</p>
+    <div class="vbox">
+      <div id="vform">
+        <div class="vq"><h3>Q1. あなたが望む未来は？</h3><p class="hint">「そうなってほしい」と思うもの。分岐図やカードを読み返してからでも。</p><div class="picks" id="pw">
+          <button type="button" class="pick t" data-q="w" data-v="1" aria-pressed="false">① 自由至上主義ユートピア</button>
+          <button type="button" class="pick t" data-q="w" data-v="2" aria-pressed="false">② 慈悲深い独裁者</button>
+          <button type="button" class="pick n" data-q="w" data-v="3" aria-pressed="false">③ 平等主義ユートピア</button>
+          <button type="button" class="pick t" data-q="w" data-v="4" aria-pressed="false">④ 門番</button>
+          <button type="button" class="pick t" data-q="w" data-v="5" aria-pressed="false">⑤ 守護神</button>
+          <button type="button" class="pick t" data-q="w" data-v="6" aria-pressed="false">⑥ 奴隷の神</button>
+          <button type="button" class="pick g" data-q="w" data-v="7" aria-pressed="false">⑦ 征服者</button>
+          <button type="button" class="pick g" data-q="w" data-v="8" aria-pressed="false">⑧ 子孫</button>
+          <button type="button" class="pick g" data-q="w" data-v="9" aria-pressed="false">⑨ 動物園の飼育係</button>
+          <button type="button" class="pick n" data-q="w" data-v="10" aria-pressed="false">⑩ 1984</button>
+          <button type="button" class="pick n" data-q="w" data-v="11" aria-pressed="false">⑪ 逆戻り</button>
+          <button type="button" class="pick n" data-q="w" data-v="12" aria-pressed="false">⑫ 自滅</button>
+        </div></div>
+        <div class="vq"><h3>Q2. 実際に来そうな未来は？</h3><p class="hint">望むかどうかは別にして、「現実にはこうなりそう」と思うもの。</p><div class="picks" id="pl">
+          <button type="button" class="pick t" data-q="l" data-v="1" aria-pressed="false">① 自由至上主義ユートピア</button>
+          <button type="button" class="pick t" data-q="l" data-v="2" aria-pressed="false">② 慈悲深い独裁者</button>
+          <button type="button" class="pick n" data-q="l" data-v="3" aria-pressed="false">③ 平等主義ユートピア</button>
+          <button type="button" class="pick t" data-q="l" data-v="4" aria-pressed="false">④ 門番</button>
+          <button type="button" class="pick t" data-q="l" data-v="5" aria-pressed="false">⑤ 守護神</button>
+          <button type="button" class="pick t" data-q="l" data-v="6" aria-pressed="false">⑥ 奴隷の神</button>
+          <button type="button" class="pick g" data-q="l" data-v="7" aria-pressed="false">⑦ 征服者</button>
+          <button type="button" class="pick g" data-q="l" data-v="8" aria-pressed="false">⑧ 子孫</button>
+          <button type="button" class="pick g" data-q="l" data-v="9" aria-pressed="false">⑨ 動物園の飼育係</button>
+          <button type="button" class="pick n" data-q="l" data-v="10" aria-pressed="false">⑩ 1984</button>
+          <button type="button" class="pick n" data-q="l" data-v="11" aria-pressed="false">⑪ 逆戻り</button>
+          <button type="button" class="pick n" data-q="l" data-v="12" aria-pressed="false">⑫ 自滅</button>
+        </div></div>
+        <div class="vsubmit"><button type="button" id="vgo" disabled>投票する</button><span class="msg" id="vmsg">2つ選ぶと投票できます</span></div>
+      </div>
+      <div id="vres" class="vres" hidden>
+        <div class="you" id="vyou"></div>
+        <div class="vgrid">
+          <div class="vchart"><h4>望む未来<small id="vn1"></small></h4><ul class="vbars" id="cw"></ul></div>
+          <div class="vchart"><h4>来そうな未来<small id="vn2"></small></h4><ul class="vbars" id="cl"></ul></div>
+        </div>
+        <p class="vnote"><i></i>黄色の線は FLI アンケート（世界の読者、望む未来のみ）の概算値。集計は1分ごとに更新されます。</p>
+        <div class="vshare" id="vshare"></div>
+      </div>
     </div>
   </section>
 
@@ -678,7 +767,7 @@ flowchart TD
 
   <footer class="disclaimer">
     <p>本書の表5.1（超知能（ASI）の有無・人類の存在・誰が制御するか）の区分に沿って、判断の順に12シナリオを並べたもの。丸数字は第5章での登場順、「≒」は日本人向けの喩え。シナリオのボックスをクリックすると、ページ下部の該当する解説へ移動する。赤枠の分岐点は、ダリオ・アモデイ氏のエッセイ<a href="https://darioamodei.com/post/we-must-pace-the-frontier" target="_blank" rel="noopener">「We Must Pace the Frontier」</a>が直接扱っている判断で、付箋から解説へ移動できる。付箋の写真のクレジットはページ下部「参考資料」に記載。アモデイ氏の写真は <a href="https://commons.wikimedia.org/wiki/File:Dario_Amodei_at_TechCrunch_Disrupt_2023_01_(cropped_2).jpg" target="_blank" rel="noopener">TechCrunch撮影（Wikimedia Commons）</a>、<a href="https://creativecommons.org/licenses/by/2.0/" target="_blank" rel="noopener">CC BY 2.0</a>、トリミングして使用。</p>
-    <p>各解説・要約はこのページ作成者によるもので、原文の主張の順序・強調は必ずしも同じではありません。「世界の読者はどの未来を選んだか」の数値はFLI公開グラフからの概算で公式集計ではありません。「海外の読者はこう語った」は公開投稿の趣旨を紹介目的で要約したもので、原文の転載・逐語訳ではなく、各投稿者の見解はこのページの見解ではありません。掲載に問題がある場合は意見フォームからお知らせください。著者・研究者の肖像はいずれもWikimedia Commonsで確認したCCライセンスの写真をトリミングして使用しています（クレジットは各カードに記載）。</p>
+    <p>各解説・要約はこのページ作成者によるもので、原文の主張の順序・強調は必ずしも同じではありません。「世界の読者はどの未来を選んだか」の数値はFLI公開グラフからの概算で公式集計ではありません。「あなたはどれを選ぶ？」の投票は匿名で、保存するのは選択した2つの番号・投票時刻・重複防止用にハッシュ化した接続元情報のみです。「海外の読者はこう語った」は公開投稿の趣旨を紹介目的で要約したもので、原文の転載・逐語訳ではなく、各投稿者の見解はこのページの見解ではありません。掲載に問題がある場合は意見フォームからお知らせください。著者・研究者の肖像はいずれもWikimedia Commonsで確認したCCライセンスの写真をトリミングして使用しています（クレジットは各カードに記載）。</p>
   </footer>
 </div>
 <script>
@@ -758,6 +847,68 @@ flowchart TD
   fix();
   var mo=new MutationObserver(fix); mo.observe(document.documentElement,{childList:true,subtree:true});
   window.addEventListener('load',fix); setTimeout(fix,1500); setTimeout(fix,4000);
+})();
+</script>
+<script>
+(function(){
+  var S={1:['自由至上主義ユートピア','t'],2:['慈悲深い独裁者','t'],3:['平等主義ユートピア','n'],4:['門番','t'],5:['守護神','t'],6:['奴隷の神','t'],7:['征服者','g'],8:['子孫','g'],9:['動物園の飼育係','g'],10:['1984','n'],11:['逆戻り','n'],12:['自滅','n']};
+  var FLI={1:31.6,2:3.7,3:36.3,4:3.1,5:10.1,6:5.8,7:0.6,8:4.9,9:0.1,10:0.1,11:0.2,12:0.6};
+  var CIRC=['','①','②','③','④','⑤','⑥','⑦','⑧','⑨','⑩','⑪','⑫'];
+  var COL={t:'var(--thrive)',n:'var(--none)',g:'var(--gone)'};
+  var LIVE=(location.hostname==='12futures.jp');
+  var form=document.getElementById('vform'), res=document.getElementById('vres'), go=document.getElementById('vgo'), msg=document.getElementById('vmsg');
+  if(!form) return;
+  var pick={w:0,l:0};
+  function store(){ try{ return JSON.parse(localStorage.getItem('v12pick')||'null'); }catch(e){ return null; } }
+  function save(o){ try{ localStorage.setItem('v12pick', JSON.stringify(o)); }catch(e){} }
+  document.querySelectorAll('.pick').forEach(function(b){
+    b.addEventListener('click', function(){
+      var q=b.getAttribute('data-q'), v=+b.getAttribute('data-v');
+      pick[q]=v;
+      document.querySelectorAll('.pick[data-q="'+q+'"]').forEach(function(x){ x.setAttribute('aria-pressed', x===b?'true':'false'); });
+      go.disabled=!(pick.w&&pick.l);
+      msg.textContent = go.disabled ? '2つ選ぶと投票できます' : ('望む：'+CIRC[pick.w]+S[pick.w][0]+' ／ 来そう：'+CIRC[pick.l]+S[pick.l][0]);
+      msg.className='msg';
+    });
+  });
+  function bars(el, counts, total, mine, withFli){
+    el.innerHTML='';
+    for(var i=1;i<=12;i++){
+      var c=counts[i]||0, p= total? 100*c/total : 0;
+      var li=document.createElement('li'); if(i===mine) li.className='me';
+      li.innerHTML='<span class="lab">'+CIRC[i]+' '+S[i][0]+'</span><span class="track"><span class="fill" style="--c:'+COL[S[i][1]]+';width:'+p.toFixed(1)+'%"></span>'+(withFli?'<span class="fli" style="left:'+FLI[i]+'%" title="FLI '+FLI[i]+'%"></span>':'')+'</span><span class="val">'+(total? (p<1&&c? p.toFixed(1): Math.round(p))+'%' : '–')+'</span>';
+      el.appendChild(li);
+    }
+  }
+  function showResults(mine){
+    form.hidden=true; res.hidden=false;
+    document.getElementById('vyou').innerHTML='あなたの選択：望む未来は <b>'+CIRC[mine.want]+' '+S[mine.want][0]+'</b>、来そうな未来は <b>'+CIRC[mine.likely]+' '+S[mine.likely][0]+'</b>'+(mine.want===mine.likely?'。望みと予想が一致しています。':'。望みと予想にズレがあります——このズレこそテグマークが問うているものです。');
+    var sh=document.getElementById('vshare');
+    var url='https://12futures.jp/r/'+mine.want+'-'+mine.likely;
+    var text='私が望む未来は '+CIRC[mine.want]+S[mine.want][0]+'、来そうな未来は '+CIRC[mine.likely]+S[mine.likely][0]+'。あなたはどれを選ぶ？ #LIFE3_0 #12の未来';
+    sh.innerHTML='<a class="x" target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?text='+encodeURIComponent(text)+'&url='+encodeURIComponent(url)+'">𝕏 で共有する</a><button type="button" id="vcopy">リンクをコピー</button><span class="copied" id="vcopied"></span>';
+    document.getElementById('vcopy').onclick=function(){ try{ navigator.clipboard.writeText(url).then(function(){ document.getElementById('vcopied').textContent='コピーしました：'+url; }); }catch(e){ document.getElementById('vcopied').textContent=url; } };
+    if(!LIVE){ document.getElementById('vn1').textContent='（集計は 12futures.jp で表示）'; bars(document.getElementById('cw'),{},0,mine.want,true); bars(document.getElementById('cl'),{},0,mine.likely,false); return; }
+    fetch('/api/results',{cache:'no-store'}).then(function(r){return r.json();}).then(function(d){
+      document.getElementById('vn1').textContent='このサイトの読者 n='+d.total; document.getElementById('vn2').textContent='n='+d.total;
+      bars(document.getElementById('cw'), d.want, d.total, mine.want, true);
+      bars(document.getElementById('cl'), d.likely, d.total, mine.likely, false);
+    }).catch(function(){ document.getElementById('vn1').textContent='（集計を取得できませんでした）'; });
+  }
+  var prev=store(); if(prev&&prev.want&&prev.likely){ showResults(prev); }
+  go.addEventListener('click', function(){
+    if(!(pick.w&&pick.l)) return;
+    if(!LIVE){ msg.textContent='投票は公開サイト（12futures.jp）で受け付けています'; msg.className='msg err'; return; }
+    go.disabled=true; msg.textContent='送信中…';
+    fetch('/api/vote',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({want:pick.w,likely:pick.l})})
+      .then(function(r){ return r.json().then(function(j){ return {s:r.status,j:j}; }); })
+      .then(function(x){
+        if(x.s===200||x.s===409){ var m={want:x.j.want,likely:x.j.likely}; save(m); showResults(m); if(x.s===409){ document.getElementById('vyou').insertAdjacentHTML('beforeend',' <span style="color:var(--muted);font-size:12.5px">（このブラウザからは投票済みのため、前回の選択を表示しています）</span>'); } return; }
+        go.disabled=false;
+        msg.className='msg err';
+        msg.textContent = x.s===429 ? '同じ回線からの投票が上限に達しました。時間をおいて再度お試しください' : '送信できませんでした（'+x.s+'）。時間をおいて再度お試しください';
+      }).catch(function(){ go.disabled=false; msg.className='msg err'; msg.textContent='通信エラーです。時間をおいて再度お試しください'; });
+  });
 })();
 </script>
 
