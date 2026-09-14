@@ -1,8 +1,11 @@
 {
   "name": "life30",
+  "main": "src/index.js",
   "compatibility_date": "2026-09-01",
   "assets": {
     "directory": "./life30-deploy_1",
-    "not_found_handling": "404-page"
+    "binding": "ASSETS",
+    "not_found_handling": "404-page",
+    "run_worker_first": true
   }
 }
