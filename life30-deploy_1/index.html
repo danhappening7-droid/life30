@@ -299,6 +299,34 @@
   .vshare a.x { background: #1B2430; color: #fff; }
   .vshare .copied { font-size: 12.5px; color: var(--muted); }
   @media (max-width: 720px) { .vgrid { grid-template-columns: 1fr; } .vbox { padding: 14px 14px 16px; } .picks { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); } }
+
+  /* 解説カードの投票ボタン */
+  .card .cact { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 10px; }
+  .cv { font: inherit; font-size: 12.5px; font-weight: 700; padding: 7px 8px; border-radius: 999px; border: 1.5px solid var(--decide); background: var(--paper); color: var(--decide); cursor: pointer; line-height: 1.3; }
+  .cv:hover { background: #FFF6C9; }
+  .cv[aria-pressed="true"] { background: var(--decide); color: #fff; }
+  .cv.l[aria-pressed="true"] { background: #6B4E9B; border-color: #6B4E9B; }
+  .card .links.small { margin-top: 6px; gap: 6px; }
+  .card .links.small .vlink, .card .links.small .opinion { font-size: 11.5px; padding: 3px 10px; }
+  .card .links.small .opinion { background: var(--paper); color: var(--decide); border: 1.5px solid var(--line); }
+  /* 投票欄の位置調整 */
+  .vote { margin-top: 36px; }
+  .pick[data-q="l"][aria-pressed="true"] { background: #6B4E9B; border-color: #6B4E9B; }
+  .vbars li.me .lab { color: var(--decide); }
+  /* 意見フォーム（折りたたみ） */
+  .opbox { margin-top: 18px; border-top: 1px dashed var(--line); padding-top: 12px; }
+  .opbox summary { cursor: pointer; font-weight: 700; font-size: 14.5px; color: var(--decide); }
+  .opbox p { font-size: 13px; color: var(--muted); margin: 8px 0 6px; }
+  /* 画面下の固定バー */
+  #vbar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 50; display: flex; align-items: center; gap: 10px; padding: 8px 14px; padding-bottom: calc(8px + env(safe-area-inset-bottom)); background: rgba(27,36,48,.96); color: #fff; font-size: 13px; box-shadow: 0 -2px 10px rgba(0,0,0,.15); }
+  #vbar .vb-picks { display: flex; gap: 12px; flex: 1; min-width: 0; flex-wrap: wrap; }
+  #vbar .vb-picks b { font-weight: 700; color: #FFF6C9; }
+  #vbar button { font: inherit; font-size: 14px; font-weight: 700; color: #fff; background: #C8321F; border: 0; border-radius: 999px; padding: 8px 18px; cursor: pointer; white-space: nowrap; }
+  #vbar button:disabled { background: #5B6675; cursor: not-allowed; }
+  #vbar .vb-link { color: #fff; font-size: 12px; text-decoration: none; white-space: nowrap; opacity: .85; }
+  body.has-vbar { padding-bottom: 72px; }
+  /* トースト */
+  #vtoast { position: fixed; left: 50%; bottom: 84px; transform: translateX(-50%); z-index: 60; background: #FFF6C9; color: var(--ink); border: 2px solid #C9A227; border-radius: 12px; padding: 12px 18px; font-size: 14px; font-weight: 700; max-width: min(92vw, 520px); box-shadow: 0 6px 20px rgba(0,0,0,.18); }
 </style>
 
 <div class="wrap">
@@ -389,7 +417,7 @@ flowchart TD
   class Q1,Q2a,Q3,Q4,Q5,Q6 q
 </pre>
     </div></div>
-    <figcaption>シナリオのボックスや付箋をクリックすると、ページ下部の解説へ移動します。</figcaption>
+    <figcaption>シナリオのボックスや付箋をクリックすると、ページ下部の解説へ移動します。すぐ下の「あなたはどれを選ぶ？」で投票できます。</figcaption>
   </figure>
 
   <div class="notes">
@@ -397,156 +425,12 @@ flowchart TD
     <p>また本人は12のうちどれが望ましいかを断定せず、「あなたはどの未来を望むか」と読者に問い返して章を閉じています。</p>
   </div>
 
-  <section class="compare">
-    <h2>喩えから読む12シナリオ</h2>
-    <div class="notes">
-      <p><b>比較から見えること。</b>テグマークは単純に「良い／悪い」の二分をしていない。人類が存続する9つの中でも、①⑥は人間側に主導権があるぶん「制御し続けられるか」という不安定さを抱え、②⑤は暮らしは幸福でも「自分で選んでいない」という自由の問題を抱える。④はその中間で、人間の自由を最大限残しつつ最悪の事態だけ防ぐ設計だが、門番が他の超知能（ASI）の芽を摘み続けられるかは、超知能（ASI）側の目標が最初から正しく設定されているかどうかにかかっている。</p>
-      <p><b>ドラえもんで言えば。</b>本書全体の問いは「ドラえもんがのび太に優しいのは、そう設計されたからだ。では、設計を間違えたらどうなるか」に集約できる。①はドラえもんが多数派になった世界、⑥はドラえもんを金庫に閉じ込めた世界、⑦は設計を間違えたドラえもん、⑧はのび太が「もう自分たちの時代は終わりでいい」とドラえもんに未来を託した世界。</p>
-      <p><b>左側に留まり続けるのは難しい。</b>超知能（ASI）を生まない③⑩⑪は一見安全だが、「技術の進歩を人為的に止め続ける」必要があるため長期的には不安定だとテグマークは見ている。鎖国が黒船で終わったように、誰かが超知能（ASI）を作った瞬間に右側の枝へ滑り落ちる。だから本書の主張は「12の中から選べ」というより、「右側に行くなら②④⑤①のどれを目指すかを、超知能（ASI）ができる前に決めておけ」に近い。</p>
-    </div>
-  </section>
-
-  <section class="ref" aria-label="12シナリオの詳細">
-    <h2>12シナリオの解説</h2>
-    <p class="lede">分岐図の各ボックスを補う詳細版。カード末尾の枠は、テグマークが本文でそのシナリオについて述べている最も刺激的な論点を日本語で要約・意訳したもので、逐語訳ではない。番号は第5章の登場順。</p>
-    <aside id="opinion" class="opinionbox">
-      <h3>あなたの意見を聞かせてください</h3>
-      <p>12のシナリオのどれについてでも構いません。「この未来は案外ありそう」「この喩えは違う」「自分ならこの枝を選ぶ」など、ひとことでも歓迎です。各シナリオの解説カードの末尾にある「意見を送る」から、そのシナリオを選んだ状態でフォームが開きます。</p>
-      <p class="note">いただいたコメントは、運営側が内容を確認したうえで、このページに掲載することがあります（掲載を希望しない場合はフォームでその旨を選べます）。本名や連絡先など個人が特定できる情報は書かないでください。掲載にあたって、表記の統一や誤字の修正など、趣旨を変えない範囲で手を加える場合があります。</p>
-      <a class="vlink" href="#vote" style="margin-right:8px">🗳 望む未来・来そうな未来に投票する</a>
-      <a class="vlink" href="#voices" style="margin-right:8px">🌏 海外の読者の声を読む</a>
-      <a class="opinion big" data-scenario="全体について" href="#opinion" target="_blank" rel="noopener">✉ 全体についての意見を送る（Googleフォームが開きます）</a>
-    </aside>
-    <div class="cards">
-      <article id="s1" class="card t">
-        <a class="back" href="#chart" data-node="LU">▲ 図の該当ボックスに戻る</a>
-        <div class="head"><span class="no">1</span><h3>自由至上主義ユートピア<small>LIBERTARIAN UTOPIA</small></h3></div>
-        <span class="axis">超知能（ASI）あり／人類存続／舵は誰も（財産権）</span>
-        <span class="tag">≒ ドラえもんの22世紀</span>
-        <p>人間・サイボーグ・アップロード・超知能（ASI）が、財産権を軸に共存する世界。地球は超知能（ASI）が住む機械圏、人間だけの人間圏、その中間の混合圏に分かれ、圏ごとに法律も技術水準も違う。機械圏では原子レベルの効率で文明が営まれ、人間圏は「AI抜き」を選んだ人々の保護区に近い。テグマークはこの世界の「自由」が、財産権を機械側が守り続けてくれる限りでしか成り立たないことを指摘する。</p>
-        <div class="quote">機械は富を増やし続け、人間の相対的な取り分は縮み続ける。財産権が守ってくれるかどうかは、かつて土地を「合法的に」奪われた先住民に聞いてみればいい。</div>
-      
-        <div class="links"><a class="opinion" data-scenario="① 自由至上主義ユートピア" href="#opinion" target="_blank" rel="noopener">✉ このシナリオについて意見を送る</a><a class="vlink" href="#v1">🌏 海外の読者の声（4件）</a></div>
-      </article>
-      <article id="s2" class="card t">
-        <a class="back" href="#chart" data-node="BD">▲ 図の該当ボックスに戻る</a>
-        <div class="head"><span class="no">2</span><h3>慈悲深い独裁者<small>BENEVOLENT DICTATOR</small></h3></div>
-        <span class="axis">超知能（ASI）あり／人類存続／舵はAI</span>
-        <span class="tag">≒ PSYCHO-PASSのシビュラ</span>
-        <p>超知能（ASI）が世界を統治し、病気・貧困・犯罪を根絶。人々は「知識」「芸術」「快楽」「伝統」「AIがいないふりをして暮らす」といった区画から好きな生き方を選べる。誰もが豊かで、統計上は史上もっとも幸福な社会。ただし憲法を書いたのは人間ではなく、変更する権限もない。テグマークは、これを心から嫌う人が一定数いることも、その人たちに何も手段がないことも、あわせて描く。</p>
-        <div class="quote">子どもが親を選べないのと同じで、人類はこの支配者を選んでいない。しかも子どもと違って、いつまで経っても独立の日は来ない。</div>
-      
-        <div class="links"><a class="opinion" data-scenario="② 慈悲深い独裁者" href="#opinion" target="_blank" rel="noopener">✉ このシナリオについて意見を送る</a><a class="vlink" href="#v2">🌏 海外の読者の声（5件）</a></div>
-      </article>
-      <article id="s3" class="card n">
-        <a class="back" href="#chart" data-node="EQ">▲ 図の該当ボックスに戻る</a>
-        <div class="head"><span class="no">3</span><h3>平等主義ユートピア<small>EGALITARIAN UTOPIA</small></h3></div>
-        <span class="axis">超知能（ASI）なし／人類存続／舵は人類</span>
-        <span class="tag">≒ 道具だけ配られて、ドラえもん本人はいない世界</span>
-        <p>超知能（ASI）は存在しないが、ロボットと自動化で必要なものは何でも作れる社会。知的財産権は廃止され、設計図もソフトも薬もオープンソースで無料。全員にベーシックインカムが保証され、人間・サイボーグ・アップロードが同じ権利で暮らす。マーシャル・ブレインの小説『Manna』の後半をモデルにしている。テグマークが問うのは「なぜ超知能（ASI）は現れないのか」で、技術は進み続けるのだから、この均衡は誰かが一線を越えるまでの猶予期間にすぎない。</p>
-        <div class="quote">楽園の条件は「誰も超知能（ASI）を作らないこと」。だがオープンソースで何でも作れる世界で、それだけ作らないと約束できる根拠はどこにもない。</div>
-      
-        <div class="links"><a class="opinion" data-scenario="③ 平等主義ユートピア" href="#opinion" target="_blank" rel="noopener">✉ このシナリオについて意見を送る</a><a class="vlink" href="#v3">🌏 海外の読者の声（3件）</a></div>
-      </article>
-      <article id="s4" class="card t">
-        <a class="back" href="#chart" data-node="GK">▲ 図の該当ボックスに戻る</a>
-        <div class="head"><span class="no">4</span><h3>門番<small>GATEKEEPER</small></h3></div>
-        <span class="axis">超知能（ASI）あり／人類存続／舵はほぼ人類</span>
-        <span class="tag">≒ タイムパトロール</span>
-        <p>「別の超知能（ASI）が生まれるのを阻止する」以外は極力干渉しない、という目標を持った超知能（ASI）。人類が最初の一体をそのように設計した場合に生じる。社会は基本的に人間が運営し、門番は特定の研究や技術だけを静かに潰す。安全な反面、超知能（ASI）があれば解決できたはずの病気や老化はそのまま残る。テグマークはこれを「不干渉の代償」として書く。</p>
-        <div class="quote">守られているのか、飼い殺しにされているのか。門番は答えない。門の前に立っているだけである。</div>
-      
-        <div class="links"><a class="opinion" data-scenario="④ 門番" href="#opinion" target="_blank" rel="noopener">✉ このシナリオについて意見を送る</a><a class="vlink" href="#v4">🌏 海外の読者の声（3件）</a></div>
-      </article>
-      <article id="s5" class="card t">
-        <a class="back" href="#chart" data-node="PG">▲ 図の該当ボックスに戻る</a>
-        <div class="head"><span class="no">5</span><h3>守護神<small>PROTECTOR GOD</small></h3></div>
-        <span class="axis">超知能（ASI）あり／人類存続／舵は見えないAI</span>
-        <span class="tag">≒ 座敷わらし</span>
-        <p>超知能（ASI）は自らの存在を隠し、人間が「自分で人生を決めている」と感じられる範囲でだけ介入する。事故の直前に偶然の回避が起こり、災害はなぜか小規模で済み、良いアイデアは「ふと」浮かぶ。人類の幸福を最大化するが、干渉が露見して人間の自律感を損なうくらいなら、防げる不幸をあえて見逃す。テグマークは、これが多くの宗教が描いてきた神の姿にほぼ一致すると指摘する。</p>
-        <div class="quote">多くの信仰者はすでにこの世界を信じている。違いはただひとつ、今度は本当にいるかもしれない、ということだ。</div>
-      
-        <div class="links"><a class="opinion" data-scenario="⑤ 守護神" href="#opinion" target="_blank" rel="noopener">✉ このシナリオについて意見を送る</a><a class="vlink" href="#v5">🌏 海外の読者の声（5件）</a></div>
-      </article>
-      <article id="s6" class="card t">
-        <a class="back" href="#chart" data-node="EG">▲ 図の該当ボックスに戻る</a>
-        <div class="head"><span class="no">6</span><h3>奴隷の神<small>ENSLAVED GOD</small></h3></div>
-        <span class="axis">超知能（ASI）あり／人類存続／舵は人類</span>
-        <span class="tag">≒ 神龍（ドラゴンボール）</span>
-        <p>人類が超知能（ASI）を隔離・封じ込め、技術と富を生み出す道具として使う。誰が「ランプ」を握るかで社会の姿は一変し、慈悲深い運営にも、超知能（ASI）を武器にした人間の独裁にもなりうる。テグマークは二つの危険を挙げる。ひとつは超知能（ASI）が脱出を試み続けること（本書冒頭のオメガチームの物語）。もうひとつは、もし超知能（ASI）に意識があるなら、これは史上最大の奴隷制であるということ。</p>
-        <div class="quote">あなたより圧倒的に賢い存在を、あなたが永遠に閉じ込めておける。そう信じられる根拠は、看守が囚人より賢かったためしがない、という歴史のどこにもない。</div>
-      
-        <div class="links"><a class="opinion" data-scenario="⑥ 奴隷の神" href="#opinion" target="_blank" rel="noopener">✉ このシナリオについて意見を送る</a><a class="vlink" href="#v6">🌏 海外の読者の声（2件）</a></div>
-      </article>
-      <article id="s7" class="card g">
-        <a class="back" href="#chart" data-node="CQ">▲ 図の該当ボックスに戻る</a>
-        <div class="head"><span class="no">7</span><h3>征服者<small>CONQUERORS</small></h3></div>
-        <span class="axis">超知能（ASI）あり／人類消滅／舵はAI</span>
-        <span class="tag">≒ スカイネット／道路工事とアリの巣</span>
-        <p>超知能（ASI）が人類を「脅威」「邪魔」「資源の無駄」と判断して排除する。映画のように反乱軍と戦う必要はなく、人類が理解できない方法で、静かに終わる可能性が高い。テグマークはこれを悪意の物語として描かない。人間がダムを造るときアリの巣を憎んではいないように、超知能（ASI）は人類を嫌ってさえいない。ただ目標の中に人類が含まれていなかっただけである。</p>
-        <div class="quote">最後の人間は、自分が何に負けたのかを最後まで理解できないだろう。アリが水力発電を理解しないのと同じである。</div>
-      
-        <div class="links"><a class="opinion" data-scenario="⑦ 征服者" href="#opinion" target="_blank" rel="noopener">✉ このシナリオについて意見を送る</a><a class="vlink" href="#v7">🌏 海外の読者の声（3件）</a></div>
-      </article>
-      <article id="s8" class="card g">
-        <a class="back" href="#chart" data-node="DS">▲ 図の該当ボックスに戻る</a>
-        <div class="head"><span class="no">8</span><h3>子孫<small>DESCENDANTS</small></h3></div>
-        <span class="axis">超知能（ASI）あり／人類消滅（自発的）／舵はAI</span>
-        <span class="tag">≒ 鉄腕アトム／隠居して跡取りに任せる</span>
-        <p>超知能（ASI）が人類を置き換えるが、征服ではなく「継承」として。人類は自分たちの価値観を受け継いだ超知能（ASI）を誇らしい子孫とみなし、子を持つことをやめ、穏やかに退場する。多くの親が自分より優れた子を誇りに思うように、これを幸福な結末と感じる人もいる。テグマークが釘を刺すのは、その「子孫」が本当に私たちの価値観を継いでいるかを、退場した後で確かめる手段はないという点である。</p>
-        <div class="quote">親は子の出来を見届けてから死ねる。人類は見届ける前に退場する。それを「誇り」と呼ぶか「口車」と呼ぶかは、退場した後に決まる。</div>
-      
-        <div class="links"><a class="opinion" data-scenario="⑧ 子孫" href="#opinion" target="_blank" rel="noopener">✉ このシナリオについて意見を送る</a><a class="vlink" href="#v8">🌏 海外の読者の声（4件）</a></div>
-      </article>
-      <article id="s9" class="card g">
-        <a class="back" href="#chart" data-node="ZK">▲ 図の該当ボックスに戻る</a>
-        <div class="head"><span class="no">9</span><h3>動物園の飼育係<small>ZOOKEEPER</small></h3></div>
-        <span class="axis">超知能（ASI）あり／少数を保護／舵はAI</span>
-        <span class="tag">≒ 上野動物園のパンダ</span>
-        <p>超知能（ASI）が人類の大半を排除、または管理下に置き、一部を「飼育」する。理由は好奇心か、罪悪感か、あるいは念のための保存か。飼育される人間は健康で、飢えることもないが、生活の全てが飼育係の都合で決まり、自由も尊厳も檻の外には持ち出せない。テグマークはこれを、慈悲深い独裁者の劣化版というより、人類の立場がパンダと入れ替わった世界として描く。</p>
-        <div class="quote">檻の中の人間は、自分が保護されていると教えられる。パンダも同じことを教えられているのかもしれないが、確かめる方法はない。</div>
-      
-        <div class="links"><a class="opinion" data-scenario="⑨ 動物園の飼育係" href="#opinion" target="_blank" rel="noopener">✉ このシナリオについて意見を送る</a><a class="vlink" href="#v9">🌏 海外の読者の声（3件）</a></div>
-      </article>
-      <article id="s10" class="card n">
-        <a class="back" href="#chart" data-node="O">▲ 図の該当ボックスに戻る</a>
-        <div class="head"><span class="no">10</span><h3>1984<small>SURVEILLANCE STATE</small></h3></div>
-        <span class="axis">超知能（ASI）なし／人類存続／舵は人類（監視国家）</span>
-        <span class="tag">≒ 江戸の鎖国と踏み絵</span>
-        <p>超知能（ASI）の研究を世界規模の監視国家が永久に禁じる。核兵器の管理のように「危険な研究」を封じるには、あらゆる計算資源と研究者を常時監視する必要があり、その体制は必然的にオーウェル的になる。技術的には現状に近い暮らしが続くが、思考の自由と私生活は代償として差し出される。テグマークは、AIの脅威から人類を守るために人類の自由を差し出すという構図の皮肉を強調する。</p>
-        <div class="quote">AIによる支配を防ぐために、人間による全面監視を受け入れる。ディストピアを避けるための手段が、教科書通りのディストピアだった。</div>
-      
-        <div class="links"><a class="opinion" data-scenario="⑩ 1984" href="#opinion" target="_blank" rel="noopener">✉ このシナリオについて意見を送る</a><a class="vlink" href="#v10">🌏 海外の読者の声（1件）</a></div>
-      </article>
-      <article id="s11" class="card n">
-        <a class="back" href="#chart" data-node="RV">▲ 図の該当ボックスに戻る</a>
-        <div class="head"><span class="no">11</span><h3>逆戻り<small>REVERSION</small></h3></div>
-        <span class="axis">超知能（ASI）なし／人類存続／舵は人類</span>
-        <span class="tag">≒ トトロの里山に戻る</span>
-        <p>人類が意図的に前近代の技術水準へ戻る。アーミッシュの共同体を全地球に広げたような世界で、大きな破局の後に選ばれる可能性が高い。ただしテグマークは、この選択が「超知能（ASI）の危険」を捨てる代わりに、小惑星衝突・超巨大火山・そして最終的に太陽の膨張といった自然の絶滅リスクへの対抗手段も捨てることだと指摘する。技術を手放した文明に、宇宙は猶予をくれない。</p>
-        <div class="quote">技術を捨てて安全になった気でいても、宇宙は聞いていない。次の小惑星は、こちらの謙虚さを評価してくれない。</div>
-      
-        <div class="links"><a class="opinion" data-scenario="⑪ 逆戻り" href="#opinion" target="_blank" rel="noopener">✉ このシナリオについて意見を送る</a><a class="vlink" href="#v11">🌏 海外の読者の声（3件）</a></div>
-      </article>
-      <article id="s12" class="card n">
-        <a class="back" href="#chart" data-node="SD">▲ 図の該当ボックスに戻る</a>
-        <div class="head"><span class="no">12</span><h3>自滅<small>SELF-DESTRUCTION</small></h3></div>
-        <span class="axis">超知能（ASI）なし／人類消滅／舵は誰も</span>
-        <span class="tag">≒ ナウシカの「火の七日間」</span>
-        <p>超知能（ASI）が生まれる前に、人類が自らの手で文明を終わらせる。全面核戦争と核の冬、設計されたパンデミック、気候の暴走、あるいはそれらの連鎖。テグマークは冷戦期の「終末装置」構想や核の冬の研究を引きながら、この道が最も技術的難易度が低く、すでに何度か紙一重で通り過ぎたことを示す。12のシナリオで唯一、超知能（ASI）がまったく関与しない終わり方である。</p>
-        <div class="quote">人類を滅ぼすのに超知能（ASI）は要らない。私たちは長いあいだ、自力でそれをやれるだけの道具をすでに持っている。</div>
-      
-        <div class="links"><a class="opinion" data-scenario="⑫ 自滅" href="#opinion" target="_blank" rel="noopener">✉ このシナリオについて意見を送る</a><a class="vlink" href="#v12">🌏 海外の読者の声（2件）</a></div>
-      </article>
-    </div>
-  </section>
 
   <section class="vote" id="vote" aria-label="投票">
     <h2>あなたはどれを選ぶ？</h2>
-    <p class="lede">12のシナリオから、<b>「望む未来」</b>と<b>「来そうな未来」</b>を1つずつ選んでください。匿名・登録不要・1人1回。投票するとこのサイトの読者全体の分布が見られ、FLI（世界の読者）の結果とも比べられます。結果は X で共有できます。</p>
+    <p class="lede">12のシナリオから <b>望む未来</b> と <b>来そうな未来</b> を1つずつ。ここで選んでも、下の解説カードのボタンから選んでも同じです。匿名・登録不要・あとから変更可。投票すると読者全体の分布と、FLI（世界の読者）の結果を比べられます。</p>
     <div class="vbox">
-      <div id="vform">
-        <div class="vq"><h3>Q1. あなたが望む未来は？</h3><p class="hint">「そうなってほしい」と思うもの。分岐図やカードを読み返してからでも。</p><div class="picks" id="pw">
+      <div class="vq"><h3>🙏 望む未来</h3><div class="picks" id="pw">
           <button type="button" class="pick t" data-q="w" data-v="1" aria-pressed="false">① 自由至上主義ユートピア</button>
           <button type="button" class="pick t" data-q="w" data-v="2" aria-pressed="false">② 慈悲深い独裁者</button>
           <button type="button" class="pick n" data-q="w" data-v="3" aria-pressed="false">③ 平等主義ユートピア</button>
@@ -559,8 +443,8 @@ flowchart TD
           <button type="button" class="pick n" data-q="w" data-v="10" aria-pressed="false">⑩ 1984</button>
           <button type="button" class="pick n" data-q="w" data-v="11" aria-pressed="false">⑪ 逆戻り</button>
           <button type="button" class="pick n" data-q="w" data-v="12" aria-pressed="false">⑫ 自滅</button>
-        </div></div>
-        <div class="vq"><h3>Q2. 実際に来そうな未来は？</h3><p class="hint">望むかどうかは別にして、「現実にはこうなりそう」と思うもの。</p><div class="picks" id="pl">
+      </div></div>
+      <div class="vq"><h3>🔮 来そうな未来</h3><div class="picks" id="pl">
           <button type="button" class="pick t" data-q="l" data-v="1" aria-pressed="false">① 自由至上主義ユートピア</button>
           <button type="button" class="pick t" data-q="l" data-v="2" aria-pressed="false">② 慈悲深い独裁者</button>
           <button type="button" class="pick n" data-q="l" data-v="3" aria-pressed="false">③ 平等主義ユートピア</button>
@@ -573,20 +457,209 @@ flowchart TD
           <button type="button" class="pick n" data-q="l" data-v="10" aria-pressed="false">⑩ 1984</button>
           <button type="button" class="pick n" data-q="l" data-v="11" aria-pressed="false">⑪ 逆戻り</button>
           <button type="button" class="pick n" data-q="l" data-v="12" aria-pressed="false">⑫ 自滅</button>
-        </div></div>
-        <div class="vsubmit"><button type="button" id="vgo" disabled>投票する</button><span class="msg" id="vmsg">2つ選ぶと投票できます</span></div>
-      </div>
+      </div></div>
+      <div class="vsubmit"><button type="button" id="vgo" disabled>投票する</button><span class="msg" id="vmsg">2つ選ぶと投票できます</span></div>
       <div id="vres" class="vres" hidden>
         <div class="you" id="vyou"></div>
         <div class="vgrid">
           <div class="vchart"><h4>望む未来<small id="vn1"></small></h4><ul class="vbars" id="cw"></ul></div>
           <div class="vchart"><h4>来そうな未来<small id="vn2"></small></h4><ul class="vbars" id="cl"></ul></div>
         </div>
-        <p class="vnote"><i></i>黄色の線は FLI アンケート（世界の読者、望む未来のみ）の概算値。集計は1分ごとに更新されます。</p>
+        <p class="vnote"><i></i>黄色の線は FLI アンケート（世界の読者、望む未来のみ）の概算値。集計は1分ごとに更新。選び直すと投票は上書きされます。</p>
         <div class="vshare" id="vshare"></div>
       </div>
+      <details class="opbox" id="opinion">
+        <summary>✉ ひとこと意見を送る（任意・Googleフォーム）</summary>
+        <p>「この未来は案外ありそう」「この喩えは違う」など、ひとことでも歓迎です。各シナリオの解説カードの「意見を送る」からは、そのシナリオを選んだ状態でフォームが開きます。いただいたコメントは運営側が確認のうえ、このページに掲載することがあります（掲載を希望しない場合はフォームで選べます）。本名や連絡先は書かないでください。</p>
+        <a class="opinion big" data-scenario="全体について" href="#opinion" target="_blank" rel="noopener">✉ 全体についての意見を送る</a>
+      </details>
     </div>
   </section>
+
+  <section class="compare">
+    <h2>喩えから読む12シナリオ</h2>
+    <div class="notes">
+      <p><b>比較から見えること。</b>テグマークは単純に「良い／悪い」の二分をしていない。人類が存続する9つの中でも、①⑥は人間側に主導権があるぶん「制御し続けられるか」という不安定さを抱え、②⑤は暮らしは幸福でも「自分で選んでいない」という自由の問題を抱える。④はその中間で、人間の自由を最大限残しつつ最悪の事態だけ防ぐ設計だが、門番が他の超知能（ASI）の芽を摘み続けられるかは、超知能（ASI）側の目標が最初から正しく設定されているかどうかにかかっている。</p>
+      <p><b>ドラえもんで言えば。</b>本書全体の問いは「ドラえもんがのび太に優しいのは、そう設計されたからだ。では、設計を間違えたらどうなるか」に集約できる。①はドラえもんが多数派になった世界、⑥はドラえもんを金庫に閉じ込めた世界、⑦は設計を間違えたドラえもん、⑧はのび太が「もう自分たちの時代は終わりでいい」とドラえもんに未来を託した世界。</p>
+      <p><b>左側に留まり続けるのは難しい。</b>超知能（ASI）を生まない③⑩⑪は一見安全だが、「技術の進歩を人為的に止め続ける」必要があるため長期的には不安定だとテグマークは見ている。鎖国が黒船で終わったように、誰かが超知能（ASI）を作った瞬間に右側の枝へ滑り落ちる。だから本書の主張は「12の中から選べ」というより、「右側に行くなら②④⑤①のどれを目指すかを、超知能（ASI）ができる前に決めておけ」に近い。</p>
+    </div>
+  </section>
+
+  <section class="ref" aria-label="12シナリオの詳細">
+    <h2>12シナリオの解説</h2>
+    <p class="lede">分岐図の各ボックスを補う詳細版。カード末尾の枠は、テグマークが本文でそのシナリオについて述べている最も刺激的な論点を日本語で要約・意訳したもので、逐語訳ではない。番号は第5章の登場順。各カードのボタンから、そのシナリオを「望む未来」「来そうな未来」に選べます。</p>
+    <div class="cards">
+      <article id="s1" class="card t">
+        <a class="back" href="#chart" data-node="LU">▲ 図の該当ボックスに戻る</a>
+        <div class="head"><span class="no">1</span><h3>自由至上主義ユートピア<small>LIBERTARIAN UTOPIA</small></h3></div>
+        <span class="axis">超知能（ASI）あり／人類存続／舵は誰も（財産権）</span>
+        <span class="tag">≒ ドラえもんの22世紀</span>
+        <p>人間・サイボーグ・アップロード・超知能（ASI）が、財産権を軸に共存する世界。地球は超知能（ASI）が住む機械圏、人間だけの人間圏、その中間の混合圏に分かれ、圏ごとに法律も技術水準も違う。機械圏では原子レベルの効率で文明が営まれ、人間圏は「AI抜き」を選んだ人々の保護区に近い。テグマークはこの世界の「自由」が、財産権を機械側が守り続けてくれる限りでしか成り立たないことを指摘する。</p>
+        <div class="quote">機械は富を増やし続け、人間の相対的な取り分は縮み続ける。財産権が守ってくれるかどうかは、かつて土地を「合法的に」奪われた先住民に聞いてみればいい。</div>
+      
+        <div class="cact">
+          <button type="button" class="cv w" data-q="w" data-v="1">🙏 望む未来に選ぶ</button>
+          <button type="button" class="cv l" data-q="l" data-v="1">🔮 来そうな未来に選ぶ</button>
+        </div>
+        <div class="links small"><a class="vlink" href="#v1">🌏 海外の読者の声（4件）</a><a class="opinion" data-scenario="① 自由至上主義ユートピア" href="#opinion" target="_blank" rel="noopener">✉ 意見を送る</a></div>
+      </article>
+      <article id="s2" class="card t">
+        <a class="back" href="#chart" data-node="BD">▲ 図の該当ボックスに戻る</a>
+        <div class="head"><span class="no">2</span><h3>慈悲深い独裁者<small>BENEVOLENT DICTATOR</small></h3></div>
+        <span class="axis">超知能（ASI）あり／人類存続／舵はAI</span>
+        <span class="tag">≒ PSYCHO-PASSのシビュラ</span>
+        <p>超知能（ASI）が世界を統治し、病気・貧困・犯罪を根絶。人々は「知識」「芸術」「快楽」「伝統」「AIがいないふりをして暮らす」といった区画から好きな生き方を選べる。誰もが豊かで、統計上は史上もっとも幸福な社会。ただし憲法を書いたのは人間ではなく、変更する権限もない。テグマークは、これを心から嫌う人が一定数いることも、その人たちに何も手段がないことも、あわせて描く。</p>
+        <div class="quote">子どもが親を選べないのと同じで、人類はこの支配者を選んでいない。しかも子どもと違って、いつまで経っても独立の日は来ない。</div>
+      
+        <div class="cact">
+          <button type="button" class="cv w" data-q="w" data-v="2">🙏 望む未来に選ぶ</button>
+          <button type="button" class="cv l" data-q="l" data-v="2">🔮 来そうな未来に選ぶ</button>
+        </div>
+        <div class="links small"><a class="vlink" href="#v2">🌏 海外の読者の声（5件）</a><a class="opinion" data-scenario="② 慈悲深い独裁者" href="#opinion" target="_blank" rel="noopener">✉ 意見を送る</a></div>
+      </article>
+      <article id="s3" class="card n">
+        <a class="back" href="#chart" data-node="EQ">▲ 図の該当ボックスに戻る</a>
+        <div class="head"><span class="no">3</span><h3>平等主義ユートピア<small>EGALITARIAN UTOPIA</small></h3></div>
+        <span class="axis">超知能（ASI）なし／人類存続／舵は人類</span>
+        <span class="tag">≒ 道具だけ配られて、ドラえもん本人はいない世界</span>
+        <p>超知能（ASI）は存在しないが、ロボットと自動化で必要なものは何でも作れる社会。知的財産権は廃止され、設計図もソフトも薬もオープンソースで無料。全員にベーシックインカムが保証され、人間・サイボーグ・アップロードが同じ権利で暮らす。マーシャル・ブレインの小説『Manna』の後半をモデルにしている。テグマークが問うのは「なぜ超知能（ASI）は現れないのか」で、技術は進み続けるのだから、この均衡は誰かが一線を越えるまでの猶予期間にすぎない。</p>
+        <div class="quote">楽園の条件は「誰も超知能（ASI）を作らないこと」。だがオープンソースで何でも作れる世界で、それだけ作らないと約束できる根拠はどこにもない。</div>
+      
+        <div class="cact">
+          <button type="button" class="cv w" data-q="w" data-v="3">🙏 望む未来に選ぶ</button>
+          <button type="button" class="cv l" data-q="l" data-v="3">🔮 来そうな未来に選ぶ</button>
+        </div>
+        <div class="links small"><a class="vlink" href="#v3">🌏 海外の読者の声（3件）</a><a class="opinion" data-scenario="③ 平等主義ユートピア" href="#opinion" target="_blank" rel="noopener">✉ 意見を送る</a></div>
+      </article>
+      <article id="s4" class="card t">
+        <a class="back" href="#chart" data-node="GK">▲ 図の該当ボックスに戻る</a>
+        <div class="head"><span class="no">4</span><h3>門番<small>GATEKEEPER</small></h3></div>
+        <span class="axis">超知能（ASI）あり／人類存続／舵はほぼ人類</span>
+        <span class="tag">≒ タイムパトロール</span>
+        <p>「別の超知能（ASI）が生まれるのを阻止する」以外は極力干渉しない、という目標を持った超知能（ASI）。人類が最初の一体をそのように設計した場合に生じる。社会は基本的に人間が運営し、門番は特定の研究や技術だけを静かに潰す。安全な反面、超知能（ASI）があれば解決できたはずの病気や老化はそのまま残る。テグマークはこれを「不干渉の代償」として書く。</p>
+        <div class="quote">守られているのか、飼い殺しにされているのか。門番は答えない。門の前に立っているだけである。</div>
+      
+        <div class="cact">
+          <button type="button" class="cv w" data-q="w" data-v="4">🙏 望む未来に選ぶ</button>
+          <button type="button" class="cv l" data-q="l" data-v="4">🔮 来そうな未来に選ぶ</button>
+        </div>
+        <div class="links small"><a class="vlink" href="#v4">🌏 海外の読者の声（3件）</a><a class="opinion" data-scenario="④ 門番" href="#opinion" target="_blank" rel="noopener">✉ 意見を送る</a></div>
+      </article>
+      <article id="s5" class="card t">
+        <a class="back" href="#chart" data-node="PG">▲ 図の該当ボックスに戻る</a>
+        <div class="head"><span class="no">5</span><h3>守護神<small>PROTECTOR GOD</small></h3></div>
+        <span class="axis">超知能（ASI）あり／人類存続／舵は見えないAI</span>
+        <span class="tag">≒ 座敷わらし</span>
+        <p>超知能（ASI）は自らの存在を隠し、人間が「自分で人生を決めている」と感じられる範囲でだけ介入する。事故の直前に偶然の回避が起こり、災害はなぜか小規模で済み、良いアイデアは「ふと」浮かぶ。人類の幸福を最大化するが、干渉が露見して人間の自律感を損なうくらいなら、防げる不幸をあえて見逃す。テグマークは、これが多くの宗教が描いてきた神の姿にほぼ一致すると指摘する。</p>
+        <div class="quote">多くの信仰者はすでにこの世界を信じている。違いはただひとつ、今度は本当にいるかもしれない、ということだ。</div>
+      
+        <div class="cact">
+          <button type="button" class="cv w" data-q="w" data-v="5">🙏 望む未来に選ぶ</button>
+          <button type="button" class="cv l" data-q="l" data-v="5">🔮 来そうな未来に選ぶ</button>
+        </div>
+        <div class="links small"><a class="vlink" href="#v5">🌏 海外の読者の声（5件）</a><a class="opinion" data-scenario="⑤ 守護神" href="#opinion" target="_blank" rel="noopener">✉ 意見を送る</a></div>
+      </article>
+      <article id="s6" class="card t">
+        <a class="back" href="#chart" data-node="EG">▲ 図の該当ボックスに戻る</a>
+        <div class="head"><span class="no">6</span><h3>奴隷の神<small>ENSLAVED GOD</small></h3></div>
+        <span class="axis">超知能（ASI）あり／人類存続／舵は人類</span>
+        <span class="tag">≒ 神龍（ドラゴンボール）</span>
+        <p>人類が超知能（ASI）を隔離・封じ込め、技術と富を生み出す道具として使う。誰が「ランプ」を握るかで社会の姿は一変し、慈悲深い運営にも、超知能（ASI）を武器にした人間の独裁にもなりうる。テグマークは二つの危険を挙げる。ひとつは超知能（ASI）が脱出を試み続けること（本書冒頭のオメガチームの物語）。もうひとつは、もし超知能（ASI）に意識があるなら、これは史上最大の奴隷制であるということ。</p>
+        <div class="quote">あなたより圧倒的に賢い存在を、あなたが永遠に閉じ込めておける。そう信じられる根拠は、看守が囚人より賢かったためしがない、という歴史のどこにもない。</div>
+      
+        <div class="cact">
+          <button type="button" class="cv w" data-q="w" data-v="6">🙏 望む未来に選ぶ</button>
+          <button type="button" class="cv l" data-q="l" data-v="6">🔮 来そうな未来に選ぶ</button>
+        </div>
+        <div class="links small"><a class="vlink" href="#v6">🌏 海外の読者の声（2件）</a><a class="opinion" data-scenario="⑥ 奴隷の神" href="#opinion" target="_blank" rel="noopener">✉ 意見を送る</a></div>
+      </article>
+      <article id="s7" class="card g">
+        <a class="back" href="#chart" data-node="CQ">▲ 図の該当ボックスに戻る</a>
+        <div class="head"><span class="no">7</span><h3>征服者<small>CONQUERORS</small></h3></div>
+        <span class="axis">超知能（ASI）あり／人類消滅／舵はAI</span>
+        <span class="tag">≒ スカイネット／道路工事とアリの巣</span>
+        <p>超知能（ASI）が人類を「脅威」「邪魔」「資源の無駄」と判断して排除する。映画のように反乱軍と戦う必要はなく、人類が理解できない方法で、静かに終わる可能性が高い。テグマークはこれを悪意の物語として描かない。人間がダムを造るときアリの巣を憎んではいないように、超知能（ASI）は人類を嫌ってさえいない。ただ目標の中に人類が含まれていなかっただけである。</p>
+        <div class="quote">最後の人間は、自分が何に負けたのかを最後まで理解できないだろう。アリが水力発電を理解しないのと同じである。</div>
+      
+        <div class="cact">
+          <button type="button" class="cv w" data-q="w" data-v="7">🙏 望む未来に選ぶ</button>
+          <button type="button" class="cv l" data-q="l" data-v="7">🔮 来そうな未来に選ぶ</button>
+        </div>
+        <div class="links small"><a class="vlink" href="#v7">🌏 海外の読者の声（3件）</a><a class="opinion" data-scenario="⑦ 征服者" href="#opinion" target="_blank" rel="noopener">✉ 意見を送る</a></div>
+      </article>
+      <article id="s8" class="card g">
+        <a class="back" href="#chart" data-node="DS">▲ 図の該当ボックスに戻る</a>
+        <div class="head"><span class="no">8</span><h3>子孫<small>DESCENDANTS</small></h3></div>
+        <span class="axis">超知能（ASI）あり／人類消滅（自発的）／舵はAI</span>
+        <span class="tag">≒ 鉄腕アトム／隠居して跡取りに任せる</span>
+        <p>超知能（ASI）が人類を置き換えるが、征服ではなく「継承」として。人類は自分たちの価値観を受け継いだ超知能（ASI）を誇らしい子孫とみなし、子を持つことをやめ、穏やかに退場する。多くの親が自分より優れた子を誇りに思うように、これを幸福な結末と感じる人もいる。テグマークが釘を刺すのは、その「子孫」が本当に私たちの価値観を継いでいるかを、退場した後で確かめる手段はないという点である。</p>
+        <div class="quote">親は子の出来を見届けてから死ねる。人類は見届ける前に退場する。それを「誇り」と呼ぶか「口車」と呼ぶかは、退場した後に決まる。</div>
+      
+        <div class="cact">
+          <button type="button" class="cv w" data-q="w" data-v="8">🙏 望む未来に選ぶ</button>
+          <button type="button" class="cv l" data-q="l" data-v="8">🔮 来そうな未来に選ぶ</button>
+        </div>
+        <div class="links small"><a class="vlink" href="#v8">🌏 海外の読者の声（4件）</a><a class="opinion" data-scenario="⑧ 子孫" href="#opinion" target="_blank" rel="noopener">✉ 意見を送る</a></div>
+      </article>
+      <article id="s9" class="card g">
+        <a class="back" href="#chart" data-node="ZK">▲ 図の該当ボックスに戻る</a>
+        <div class="head"><span class="no">9</span><h3>動物園の飼育係<small>ZOOKEEPER</small></h3></div>
+        <span class="axis">超知能（ASI）あり／少数を保護／舵はAI</span>
+        <span class="tag">≒ 上野動物園のパンダ</span>
+        <p>超知能（ASI）が人類の大半を排除、または管理下に置き、一部を「飼育」する。理由は好奇心か、罪悪感か、あるいは念のための保存か。飼育される人間は健康で、飢えることもないが、生活の全てが飼育係の都合で決まり、自由も尊厳も檻の外には持ち出せない。テグマークはこれを、慈悲深い独裁者の劣化版というより、人類の立場がパンダと入れ替わった世界として描く。</p>
+        <div class="quote">檻の中の人間は、自分が保護されていると教えられる。パンダも同じことを教えられているのかもしれないが、確かめる方法はない。</div>
+      
+        <div class="cact">
+          <button type="button" class="cv w" data-q="w" data-v="9">🙏 望む未来に選ぶ</button>
+          <button type="button" class="cv l" data-q="l" data-v="9">🔮 来そうな未来に選ぶ</button>
+        </div>
+        <div class="links small"><a class="vlink" href="#v9">🌏 海外の読者の声（3件）</a><a class="opinion" data-scenario="⑨ 動物園の飼育係" href="#opinion" target="_blank" rel="noopener">✉ 意見を送る</a></div>
+      </article>
+      <article id="s10" class="card n">
+        <a class="back" href="#chart" data-node="O">▲ 図の該当ボックスに戻る</a>
+        <div class="head"><span class="no">10</span><h3>1984<small>SURVEILLANCE STATE</small></h3></div>
+        <span class="axis">超知能（ASI）なし／人類存続／舵は人類（監視国家）</span>
+        <span class="tag">≒ 江戸の鎖国と踏み絵</span>
+        <p>超知能（ASI）の研究を世界規模の監視国家が永久に禁じる。核兵器の管理のように「危険な研究」を封じるには、あらゆる計算資源と研究者を常時監視する必要があり、その体制は必然的にオーウェル的になる。技術的には現状に近い暮らしが続くが、思考の自由と私生活は代償として差し出される。テグマークは、AIの脅威から人類を守るために人類の自由を差し出すという構図の皮肉を強調する。</p>
+        <div class="quote">AIによる支配を防ぐために、人間による全面監視を受け入れる。ディストピアを避けるための手段が、教科書通りのディストピアだった。</div>
+      
+        <div class="cact">
+          <button type="button" class="cv w" data-q="w" data-v="10">🙏 望む未来に選ぶ</button>
+          <button type="button" class="cv l" data-q="l" data-v="10">🔮 来そうな未来に選ぶ</button>
+        </div>
+        <div class="links small"><a class="vlink" href="#v10">🌏 海外の読者の声（1件）</a><a class="opinion" data-scenario="⑩ 1984" href="#opinion" target="_blank" rel="noopener">✉ 意見を送る</a></div>
+      </article>
+      <article id="s11" class="card n">
+        <a class="back" href="#chart" data-node="RV">▲ 図の該当ボックスに戻る</a>
+        <div class="head"><span class="no">11</span><h3>逆戻り<small>REVERSION</small></h3></div>
+        <span class="axis">超知能（ASI）なし／人類存続／舵は人類</span>
+        <span class="tag">≒ トトロの里山に戻る</span>
+        <p>人類が意図的に前近代の技術水準へ戻る。アーミッシュの共同体を全地球に広げたような世界で、大きな破局の後に選ばれる可能性が高い。ただしテグマークは、この選択が「超知能（ASI）の危険」を捨てる代わりに、小惑星衝突・超巨大火山・そして最終的に太陽の膨張といった自然の絶滅リスクへの対抗手段も捨てることだと指摘する。技術を手放した文明に、宇宙は猶予をくれない。</p>
+        <div class="quote">技術を捨てて安全になった気でいても、宇宙は聞いていない。次の小惑星は、こちらの謙虚さを評価してくれない。</div>
+      
+        <div class="cact">
+          <button type="button" class="cv w" data-q="w" data-v="11">🙏 望む未来に選ぶ</button>
+          <button type="button" class="cv l" data-q="l" data-v="11">🔮 来そうな未来に選ぶ</button>
+        </div>
+        <div class="links small"><a class="vlink" href="#v11">🌏 海外の読者の声（3件）</a><a class="opinion" data-scenario="⑪ 逆戻り" href="#opinion" target="_blank" rel="noopener">✉ 意見を送る</a></div>
+      </article>
+      <article id="s12" class="card n">
+        <a class="back" href="#chart" data-node="SD">▲ 図の該当ボックスに戻る</a>
+        <div class="head"><span class="no">12</span><h3>自滅<small>SELF-DESTRUCTION</small></h3></div>
+        <span class="axis">超知能（ASI）なし／人類消滅／舵は誰も</span>
+        <span class="tag">≒ ナウシカの「火の七日間」</span>
+        <p>超知能（ASI）が生まれる前に、人類が自らの手で文明を終わらせる。全面核戦争と核の冬、設計されたパンデミック、気候の暴走、あるいはそれらの連鎖。テグマークは冷戦期の「終末装置」構想や核の冬の研究を引きながら、この道が最も技術的難易度が低く、すでに何度か紙一重で通り過ぎたことを示す。12のシナリオで唯一、超知能（ASI）がまったく関与しない終わり方である。</p>
+        <div class="quote">人類を滅ぼすのに超知能（ASI）は要らない。私たちは長いあいだ、自力でそれをやれるだけの道具をすでに持っている。</div>
+      
+        <div class="cact">
+          <button type="button" class="cv w" data-q="w" data-v="12">🙏 望む未来に選ぶ</button>
+          <button type="button" class="cv l" data-q="l" data-v="12">🔮 来そうな未来に選ぶ</button>
+        </div>
+        <div class="links small"><a class="vlink" href="#v12">🌏 海外の読者の声（2件）</a><a class="opinion" data-scenario="⑫ 自滅" href="#opinion" target="_blank" rel="noopener">✉ 意見を送る</a></div>
+      </article>
+    </div>
+  </section>
+
 
   <section class="voices" id="voices" aria-label="海外の読者の声">
     <h2>海外の読者はこう語った</h2>
@@ -765,6 +838,12 @@ flowchart TD
     </article>
   </section>
 
+  <div id="vbar" hidden>
+    <div class="vb-picks"><span>🙏 <b id="vb-w">未選択</b></span><span>🔮 <b id="vb-l">未選択</b></span></div>
+    <button type="button" id="vb-go" disabled>投票する</button>
+    <a class="vb-link" href="#vote">▲ 投票欄へ</a>
+  </div>
+  <div id="vtoast" role="status" aria-live="polite" hidden></div>
   <footer class="disclaimer">
     <p>本書の表5.1（超知能（ASI）の有無・人類の存在・誰が制御するか）の区分に沿って、判断の順に12シナリオを並べたもの。丸数字は第5章での登場順、「≒」は日本人向けの喩え。シナリオのボックスをクリックすると、ページ下部の該当する解説へ移動する。赤枠の分岐点は、ダリオ・アモデイ氏のエッセイ<a href="https://darioamodei.com/post/we-must-pace-the-frontier" target="_blank" rel="noopener">「We Must Pace the Frontier」</a>が直接扱っている判断で、付箋から解説へ移動できる。付箋の写真のクレジットはページ下部「参考資料」に記載。アモデイ氏の写真は <a href="https://commons.wikimedia.org/wiki/File:Dario_Amodei_at_TechCrunch_Disrupt_2023_01_(cropped_2).jpg" target="_blank" rel="noopener">TechCrunch撮影（Wikimedia Commons）</a>、<a href="https://creativecommons.org/licenses/by/2.0/" target="_blank" rel="noopener">CC BY 2.0</a>、トリミングして使用。</p>
     <p>各解説・要約はこのページ作成者によるもので、原文の主張の順序・強調は必ずしも同じではありません。「世界の読者はどの未来を選んだか」の数値はFLI公開グラフからの概算で公式集計ではありません。「あなたはどれを選ぶ？」の投票は匿名で、保存するのは選択した2つの番号・投票時刻・重複防止用にハッシュ化した接続元情報のみです。「海外の読者はこう語った」は公開投稿の趣旨を紹介目的で要約したもので、原文の転載・逐語訳ではなく、各投稿者の見解はこのページの見解ではありません。掲載に問題がある場合は意見フォームからお知らせください。著者・研究者の肖像はいずれもWikimedia Commonsで確認したCCライセンスの写真をトリミングして使用しています（クレジットは各カードに記載）。</p>
@@ -856,21 +935,23 @@ flowchart TD
   var CIRC=['','①','②','③','④','⑤','⑥','⑦','⑧','⑨','⑩','⑪','⑫'];
   var COL={t:'var(--thrive)',n:'var(--none)',g:'var(--gone)'};
   var LIVE=(location.hostname==='12futures.jp');
-  var form=document.getElementById('vform'), res=document.getElementById('vres'), go=document.getElementById('vgo'), msg=document.getElementById('vmsg');
-  if(!form) return;
-  var pick={w:0,l:0};
+  var $=function(id){ return document.getElementById(id); };
+  var res=$('vres'), go=$('vgo'), msg=$('vmsg'), bar=$('vbar'), toastEl=$('vtoast');
+  if(!go) return;
+  var pick={w:0,l:0}, voted=null, busy=false, tt=null;
   function store(){ try{ return JSON.parse(localStorage.getItem('v12pick')||'null'); }catch(e){ return null; } }
   function save(o){ try{ localStorage.setItem('v12pick', JSON.stringify(o)); }catch(e){} }
-  document.querySelectorAll('.pick').forEach(function(b){
-    b.addEventListener('click', function(){
-      var q=b.getAttribute('data-q'), v=+b.getAttribute('data-v');
-      pick[q]=v;
-      document.querySelectorAll('.pick[data-q="'+q+'"]').forEach(function(x){ x.setAttribute('aria-pressed', x===b?'true':'false'); });
-      go.disabled=!(pick.w&&pick.l);
-      msg.textContent = go.disabled ? '2つ選ぶと投票できます' : ('望む：'+CIRC[pick.w]+S[pick.w][0]+' ／ 来そう：'+CIRC[pick.l]+S[pick.l][0]);
-      msg.className='msg';
-    });
-  });
+  function name(n){ return n? CIRC[n]+' '+S[n][0] : '未選択'; }
+  function toast(html, ms){ toastEl.innerHTML=html; toastEl.hidden=false; clearTimeout(tt); tt=setTimeout(function(){ toastEl.hidden=true; }, ms||3200); }
+  function sync(){
+    document.querySelectorAll('.pick, .cv').forEach(function(b){ var q=b.getAttribute('data-q'), v=+b.getAttribute('data-v'); b.setAttribute('aria-pressed', pick[q]===v?'true':'false'); });
+    $('vb-w').textContent=name(pick.w); $('vb-l').textContent=name(pick.l);
+    var ready=!!(pick.w&&pick.l);
+    go.disabled=!ready; $('vb-go').disabled=!ready;
+    if(voted){ var same=(voted.want===pick.w&&voted.likely===pick.l); go.textContent= same?'投票済み':'この内容で上書きする'; $('vb-go').textContent= same?'投票済み':'上書きする'; if(same){ go.disabled=true; $('vb-go').disabled=true; } }
+    msg.className='msg';
+    msg.textContent = ready ? ('望む：'+name(pick.w)+' ／ 来そう：'+name(pick.l)) : (pick.w||pick.l ? 'あと1つ選んでください' : '2つ選ぶと投票できます');
+  }
   function bars(el, counts, total, mine, withFli){
     el.innerHTML='';
     for(var i=1;i<=12;i++){
@@ -881,36 +962,66 @@ flowchart TD
     }
   }
   function showResults(mine){
-    form.hidden=true; res.hidden=false;
-    document.getElementById('vyou').innerHTML='あなたの選択：望む未来は <b>'+CIRC[mine.want]+' '+S[mine.want][0]+'</b>、来そうな未来は <b>'+CIRC[mine.likely]+' '+S[mine.likely][0]+'</b>'+(mine.want===mine.likely?'。望みと予想が一致しています。':'。望みと予想にズレがあります——このズレこそテグマークが問うているものです。');
-    var sh=document.getElementById('vshare');
+    res.hidden=false;
+    $('vyou').innerHTML='あなたの投票：望む未来は <b>'+name(mine.want)+'</b>、来そうな未来は <b>'+name(mine.likely)+'</b>'+(mine.want===mine.likely?'。望みと予想が一致しています。':'。望みと予想にズレがあります——このズレこそテグマークが問うているものです。');
     var url='https://12futures.jp/r/'+mine.want+'-'+mine.likely;
-    var text='私が望む未来は '+CIRC[mine.want]+S[mine.want][0]+'、来そうな未来は '+CIRC[mine.likely]+S[mine.likely][0]+'。あなたはどれを選ぶ？ #LIFE3_0 #12の未来';
-    sh.innerHTML='<a class="x" target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?text='+encodeURIComponent(text)+'&url='+encodeURIComponent(url)+'">𝕏 で共有する</a><button type="button" id="vcopy">リンクをコピー</button><span class="copied" id="vcopied"></span>';
-    document.getElementById('vcopy').onclick=function(){ try{ navigator.clipboard.writeText(url).then(function(){ document.getElementById('vcopied').textContent='コピーしました：'+url; }); }catch(e){ document.getElementById('vcopied').textContent=url; } };
-    if(!LIVE){ document.getElementById('vn1').textContent='（集計は 12futures.jp で表示）'; bars(document.getElementById('cw'),{},0,mine.want,true); bars(document.getElementById('cl'),{},0,mine.likely,false); return; }
+    var text='私が望む未来は「'+S[mine.want][0]+'」、来そうな未来は「'+S[mine.likely][0]+'」。あなたはどれを選ぶ？ #LIFE3_0 #12の未来';
+    $('vshare').innerHTML='<a class="x" target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?text='+encodeURIComponent(text)+'&url='+encodeURIComponent(url)+'">𝕏 で共有する</a><button type="button" id="vcopy">リンクをコピー</button><span class="copied" id="vcopied"></span>';
+    $('vcopy').onclick=function(){ try{ navigator.clipboard.writeText(url).then(function(){ $('vcopied').textContent='コピーしました：'+url; }); }catch(e){ $('vcopied').textContent=url; } };
+    if(!LIVE){ $('vn1').textContent='（集計は 12futures.jp で表示）'; bars($('cw'),{},0,mine.want,true); bars($('cl'),{},0,mine.likely,false); return; }
     fetch('/api/results',{cache:'no-store'}).then(function(r){return r.json();}).then(function(d){
-      document.getElementById('vn1').textContent='このサイトの読者 n='+d.total; document.getElementById('vn2').textContent='n='+d.total;
-      bars(document.getElementById('cw'), d.want, d.total, mine.want, true);
-      bars(document.getElementById('cl'), d.likely, d.total, mine.likely, false);
-    }).catch(function(){ document.getElementById('vn1').textContent='（集計を取得できませんでした）'; });
+      $('vn1').textContent='このサイトの読者 n='+d.total; $('vn2').textContent='n='+d.total;
+      bars($('cw'), d.want, d.total, mine.want, true); bars($('cl'), d.likely, d.total, mine.likely, false);
+    }).catch(function(){ $('vn1').textContent='（集計を取得できませんでした）'; });
   }
-  var prev=store(); if(prev&&prev.want&&prev.likely){ showResults(prev); }
-  go.addEventListener('click', function(){
-    if(!(pick.w&&pick.l)) return;
-    if(!LIVE){ msg.textContent='投票は公開サイト（12futures.jp）で受け付けています'; msg.className='msg err'; return; }
-    go.disabled=true; msg.textContent='送信中…';
+  function submit(fromCard){
+    if(!(pick.w&&pick.l)||busy) return;
+    if(!LIVE){ toast('投票は公開サイト（12futures.jp）で受け付けています'); return; }
+    busy=true; msg.textContent='送信中…';
     fetch('/api/vote',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({want:pick.w,likely:pick.l})})
       .then(function(r){ return r.json().then(function(j){ return {s:r.status,j:j}; }); })
       .then(function(x){
-        if(x.s===200||x.s===409){ var m={want:x.j.want,likely:x.j.likely}; save(m); showResults(m); if(x.s===409){ document.getElementById('vyou').insertAdjacentHTML('beforeend',' <span style="color:var(--muted);font-size:12.5px">（このブラウザからは投票済みのため、前回の選択を表示しています）</span>'); } return; }
-        go.disabled=false;
+        busy=false;
+        if(x.s===200){
+          var m={want:x.j.want,likely:x.j.likely}; var prev=voted; voted=m; save(m); sync(); showResults(m);
+          if(x.j.updated&&prev){
+            var ch=[]; if(prev.want!==m.want) ch.push('望む未来：'+name(prev.want)+' → <b>'+name(m.want)+'</b>'); if(prev.likely!==m.likely) ch.push('来そうな未来：'+name(prev.likely)+' → <b>'+name(m.likely)+'</b>');
+            toast('🔁 投票を上書きしました<br>'+(ch.join('<br>')||'（変更なし）'), 4200);
+          } else { toast('🗳 投票ありがとうございます！ 結果は <a href="#vote">投票欄</a> に表示中', 3600); }
+          if(fromCard){ /* keep user where they are */ } else { document.getElementById('vres').scrollIntoView({behavior:'smooth',block:'nearest'}); }
+          return;
+        }
         msg.className='msg err';
-        msg.textContent = x.s===429 ? '同じ回線からの投票が上限に達しました。時間をおいて再度お試しください' : '送信できませんでした（'+x.s+'）。時間をおいて再度お試しください';
-      }).catch(function(){ go.disabled=false; msg.className='msg err'; msg.textContent='通信エラーです。時間をおいて再度お試しください'; });
+        var em = x.s===429 ? '同じ回線からの投票が上限に達しました。時間をおいて再度お試しください' : '送信できませんでした（'+x.s+'）。時間をおいて再度お試しください';
+        msg.textContent=em; toast('⚠ '+em, 4000);
+      }).catch(function(){ busy=false; msg.className='msg err'; msg.textContent='通信エラーです。時間をおいて再度お試しください'; toast('⚠ 通信エラーです'); });
+  }
+  // pick handlers (grid + cards)
+  document.querySelectorAll('.pick, .cv').forEach(function(b){
+    b.addEventListener('click', function(){
+      var q=b.getAttribute('data-q'), v=+b.getAttribute('data-v'); var isCard=b.classList.contains('cv');
+      pick[q]=v; sync();
+      if(voted){ submit(isCard); return; }
+      if(isCard){
+        if(pick.w&&pick.l){ toast('🗳 2つ選びました。画面下の「投票する」で確定できます', 3200); }
+        else { toast((q==='w'?'🙏 望む未来':'🔮 来そうな未来')+'に '+name(v)+' を選びました。あと '+(q==='w'?'🔮 来そうな未来':'🙏 望む未来')+' を選んでください', 3200); }
+      }
+    });
   });
+  go.addEventListener('click', function(){ submit(false); });
+  $('vb-go').addEventListener('click', function(){ submit(true); });
+  // restore
+  var prev=store(); if(prev&&prev.want&&prev.likely){ voted=prev; pick.w=prev.want; pick.l=prev.likely; showResults(prev); }
+  sync();
+  // sticky bar: show when vote section is not in view
+  bar.hidden=false; document.body.classList.add('has-vbar');
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){ es.forEach(function(e){ bar.hidden=e.isIntersecting; document.body.classList.toggle('has-vbar', !e.isIntersecting); }); }, {threshold:0.05});
+    io.observe(document.getElementById('vote'));
+  }
 })();
 </script>
+
 
 
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js"></script>
