@@ -317,6 +317,24 @@
   .opbox { margin-top: 18px; border-top: 1px dashed var(--line); padding-top: 12px; }
   .opbox summary { cursor: pointer; font-weight: 700; font-size: 14.5px; color: var(--decide); }
   .opbox p { font-size: 13px; color: var(--muted); margin: 8px 0 6px; }
+  .opbox form { display: flex; flex-direction: column; gap: 8px; margin-top: 6px; }
+  .opbox .oplabel { font-size: 13px; font-weight: 700; color: var(--decide); display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+  .opbox select, .opbox textarea, .opbox input[type="text"] { font: inherit; font-size: 14px; padding: 8px 10px; border: 1.5px solid var(--line); border-radius: 8px; background: #fff; color: var(--ink); }
+  .opbox select { flex: 1 1 14em; max-width: 24em; }
+  .opbox textarea { width: 100%; box-sizing: border-box; resize: vertical; min-height: 6em; line-height: 1.6; }
+  .opbox .oprow { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .opbox .oprow input { flex: 1 1 16em; max-width: 24em; }
+  .opbox .opcount { font-size: 12px; color: var(--muted); }
+  .opbox #op-hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+  .opbox button.opinion { border: 0; cursor: pointer; font: inherit; font-weight: 700; }
+  .opbox button.opinion[disabled] { opacity: .5; cursor: default; }
+  .opbox .opmsg { font-size: 13px; color: var(--muted); }
+  .opbox .opmsg.err { color: #C8321F; font-weight: 700; }
+  .jvoices .jempty { font-size: 14px; color: var(--muted); background: var(--paper); border: 1.5px dashed var(--line); border-radius: 10px; padding: 16px 18px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .jvoices .jempty .opinion { margin-top: 0; }
+  .jvoices .voice .ic { font-size: 15px; }
+  .jvoices .voice .src { font-style: normal; }
+  .vblock.j { border-left-color: #C8321F; }
   /* 画面下の固定バー */
   #vbar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 50; display: flex; align-items: center; gap: 10px; padding: 8px 14px; padding-bottom: calc(8px + env(safe-area-inset-bottom)); background: rgba(27,36,48,.96); color: #fff; font-size: 13px; box-shadow: 0 -2px 10px rgba(0,0,0,.15); }
   #vbar .vb-picks { display: flex; gap: 12px; flex: 1; min-width: 0; flex-wrap: wrap; }
@@ -469,9 +487,19 @@ flowchart TD
         <div class="vshare" id="vshare"></div>
       </div>
       <details class="opbox" id="opinion">
-        <summary>✉ ひとこと意見を送る（任意・Googleフォーム）</summary>
-        <p>「この未来は案外ありそう」「この喩えは違う」など、ひとことでも歓迎です。各シナリオの解説カードの「意見を送る」からは、そのシナリオを選んだ状態でフォームが開きます。いただいたコメントは運営側が確認のうえ、このページに掲載することがあります（掲載を希望しない場合はフォームで選べます）。本名や連絡先は書かないでください。</p>
-        <a class="opinion big" data-scenario="全体について" href="#opinion" target="_blank" rel="noopener">✉ 全体についての意見を送る</a>
+        <summary>✉ ひとこと意見を送る（任意）</summary>
+        <p>「この未来は案外ありそう」「この喩えは違う」など、ひとことでも歓迎です。運営者が確認したものを、下の「日本の読者はこう語った」に掲載します（掲載しないでほしい場合は本文にその旨を書いてください）。本名や連絡先は書かないでください。</p>
+        <form id="opform" novalidate>
+          <label class="oplabel">どのシナリオについて？<select id="op-sc"><option value="0">全体・その他</option><option value="1">① 自由至上主義ユートピア</option><option value="2">② 慈悲深い独裁者</option><option value="3">③ 平等主義ユートピア</option><option value="4">④ 門番</option><option value="5">⑤ 守護神</option><option value="6">⑥ 奴隷の神</option><option value="7">⑦ 征服者</option><option value="8">⑧ 子孫</option><option value="9">⑨ 動物園の飼育係</option><option value="10">⑩ 1984</option><option value="11">⑪ 逆戻り</option><option value="12">⑫ 自滅</option></select></label>
+          <textarea id="op-body" maxlength="600" rows="4" placeholder="ひとことでも、長文でも。（4〜600文字）"></textarea>
+          <div class="oprow">
+            <input id="op-nick" type="text" maxlength="24" placeholder="ニックネーム（任意・空なら匿名）" autocomplete="off">
+            <span class="opcount"><b id="op-n">0</b>/600</span>
+          </div>
+          <input type="text" id="op-hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <button type="submit" class="opinion big" id="op-send">✉ 送信する</button>
+          <span class="opmsg" id="op-msg" role="status" aria-live="polite"></span>
+        </form>
       </details>
     </div>
   </section>
@@ -501,7 +529,7 @@ flowchart TD
           <button type="button" class="cv w" data-q="w" data-v="1">🙏 望む未来に選ぶ</button>
           <button type="button" class="cv l" data-q="l" data-v="1">🔮 来そうな未来に選ぶ</button>
         </div>
-        <div class="links small"><a class="vlink" href="#v1">🌏 海外の読者の声（4件）</a><a class="opinion" data-scenario="① 自由至上主義ユートピア" href="#opinion" target="_blank" rel="noopener">✉ 意見を送る</a></div>
+        <div class="links small"><a class="vlink" href="#v1">🌏 海外の読者の声（4件）</a><a class="opinion" data-scenario="1" href="#opinion">✉ 意見を送る</a></div>
       </article>
       <article id="s2" class="card t">
         <a class="back" href="#chart" data-node="BD">▲ 図の該当ボックスに戻る</a>
@@ -515,7 +543,7 @@ flowchart TD
           <button type="button" class="cv w" data-q="w" data-v="2">🙏 望む未来に選ぶ</button>
           <button type="button" class="cv l" data-q="l" data-v="2">🔮 来そうな未来に選ぶ</button>
         </div>
-        <div class="links small"><a class="vlink" href="#v2">🌏 海外の読者の声（5件）</a><a class="opinion" data-scenario="② 慈悲深い独裁者" href="#opinion" target="_blank" rel="noopener">✉ 意見を送る</a></div>
+        <div class="links small"><a class="vlink" href="#v2">🌏 海外の読者の声（5件）</a><a class="opinion" data-scenario="2" href="#opinion">✉ 意見を送る</a></div>
       </article>
       <article id="s3" class="card n">
         <a class="back" href="#chart" data-node="EQ">▲ 図の該当ボックスに戻る</a>
@@ -529,7 +557,7 @@ flowchart TD
           <button type="button" class="cv w" data-q="w" data-v="3">🙏 望む未来に選ぶ</button>
           <button type="button" class="cv l" data-q="l" data-v="3">🔮 来そうな未来に選ぶ</button>
         </div>
-        <div class="links small"><a class="vlink" href="#v3">🌏 海外の読者の声（3件）</a><a class="opinion" data-scenario="③ 平等主義ユートピア" href="#opinion" target="_blank" rel="noopener">✉ 意見を送る</a></div>
+        <div class="links small"><a class="vlink" href="#v3">🌏 海外の読者の声（3件）</a><a class="opinion" data-scenario="3" href="#opinion">✉ 意見を送る</a></div>
       </article>
       <article id="s4" class="card t">
         <a class="back" href="#chart" data-node="GK">▲ 図の該当ボックスに戻る</a>
@@ -543,7 +571,7 @@ flowchart TD
           <button type="button" class="cv w" data-q="w" data-v="4">🙏 望む未来に選ぶ</button>
           <button type="button" class="cv l" data-q="l" data-v="4">🔮 来そうな未来に選ぶ</button>
         </div>
-        <div class="links small"><a class="vlink" href="#v4">🌏 海外の読者の声（3件）</a><a class="opinion" data-scenario="④ 門番" href="#opinion" target="_blank" rel="noopener">✉ 意見を送る</a></div>
+        <div class="links small"><a class="vlink" href="#v4">🌏 海外の読者の声（3件）</a><a class="opinion" data-scenario="4" href="#opinion">✉ 意見を送る</a></div>
       </article>
       <article id="s5" class="card t">
         <a class="back" href="#chart" data-node="PG">▲ 図の該当ボックスに戻る</a>
@@ -557,7 +585,7 @@ flowchart TD
           <button type="button" class="cv w" data-q="w" data-v="5">🙏 望む未来に選ぶ</button>
           <button type="button" class="cv l" data-q="l" data-v="5">🔮 来そうな未来に選ぶ</button>
         </div>
-        <div class="links small"><a class="vlink" href="#v5">🌏 海外の読者の声（5件）</a><a class="opinion" data-scenario="⑤ 守護神" href="#opinion" target="_blank" rel="noopener">✉ 意見を送る</a></div>
+        <div class="links small"><a class="vlink" href="#v5">🌏 海外の読者の声（5件）</a><a class="opinion" data-scenario="5" href="#opinion">✉ 意見を送る</a></div>
       </article>
       <article id="s6" class="card t">
         <a class="back" href="#chart" data-node="EG">▲ 図の該当ボックスに戻る</a>
@@ -571,7 +599,7 @@ flowchart TD
           <button type="button" class="cv w" data-q="w" data-v="6">🙏 望む未来に選ぶ</button>
           <button type="button" class="cv l" data-q="l" data-v="6">🔮 来そうな未来に選ぶ</button>
         </div>
-        <div class="links small"><a class="vlink" href="#v6">🌏 海外の読者の声（2件）</a><a class="opinion" data-scenario="⑥ 奴隷の神" href="#opinion" target="_blank" rel="noopener">✉ 意見を送る</a></div>
+        <div class="links small"><a class="vlink" href="#v6">🌏 海外の読者の声（2件）</a><a class="opinion" data-scenario="6" href="#opinion">✉ 意見を送る</a></div>
       </article>
       <article id="s7" class="card g">
         <a class="back" href="#chart" data-node="CQ">▲ 図の該当ボックスに戻る</a>
@@ -585,7 +613,7 @@ flowchart TD
           <button type="button" class="cv w" data-q="w" data-v="7">🙏 望む未来に選ぶ</button>
           <button type="button" class="cv l" data-q="l" data-v="7">🔮 来そうな未来に選ぶ</button>
         </div>
-        <div class="links small"><a class="vlink" href="#v7">🌏 海外の読者の声（3件）</a><a class="opinion" data-scenario="⑦ 征服者" href="#opinion" target="_blank" rel="noopener">✉ 意見を送る</a></div>
+        <div class="links small"><a class="vlink" href="#v7">🌏 海外の読者の声（3件）</a><a class="opinion" data-scenario="7" href="#opinion">✉ 意見を送る</a></div>
       </article>
       <article id="s8" class="card g">
         <a class="back" href="#chart" data-node="DS">▲ 図の該当ボックスに戻る</a>
@@ -599,7 +627,7 @@ flowchart TD
           <button type="button" class="cv w" data-q="w" data-v="8">🙏 望む未来に選ぶ</button>
           <button type="button" class="cv l" data-q="l" data-v="8">🔮 来そうな未来に選ぶ</button>
         </div>
-        <div class="links small"><a class="vlink" href="#v8">🌏 海外の読者の声（4件）</a><a class="opinion" data-scenario="⑧ 子孫" href="#opinion" target="_blank" rel="noopener">✉ 意見を送る</a></div>
+        <div class="links small"><a class="vlink" href="#v8">🌏 海外の読者の声（4件）</a><a class="opinion" data-scenario="8" href="#opinion">✉ 意見を送る</a></div>
       </article>
       <article id="s9" class="card g">
         <a class="back" href="#chart" data-node="ZK">▲ 図の該当ボックスに戻る</a>
@@ -613,7 +641,7 @@ flowchart TD
           <button type="button" class="cv w" data-q="w" data-v="9">🙏 望む未来に選ぶ</button>
           <button type="button" class="cv l" data-q="l" data-v="9">🔮 来そうな未来に選ぶ</button>
         </div>
-        <div class="links small"><a class="vlink" href="#v9">🌏 海外の読者の声（3件）</a><a class="opinion" data-scenario="⑨ 動物園の飼育係" href="#opinion" target="_blank" rel="noopener">✉ 意見を送る</a></div>
+        <div class="links small"><a class="vlink" href="#v9">🌏 海外の読者の声（3件）</a><a class="opinion" data-scenario="9" href="#opinion">✉ 意見を送る</a></div>
       </article>
       <article id="s10" class="card n">
         <a class="back" href="#chart" data-node="O">▲ 図の該当ボックスに戻る</a>
@@ -627,7 +655,7 @@ flowchart TD
           <button type="button" class="cv w" data-q="w" data-v="10">🙏 望む未来に選ぶ</button>
           <button type="button" class="cv l" data-q="l" data-v="10">🔮 来そうな未来に選ぶ</button>
         </div>
-        <div class="links small"><a class="vlink" href="#v10">🌏 海外の読者の声（1件）</a><a class="opinion" data-scenario="⑩ 1984" href="#opinion" target="_blank" rel="noopener">✉ 意見を送る</a></div>
+        <div class="links small"><a class="vlink" href="#v10">🌏 海外の読者の声（1件）</a><a class="opinion" data-scenario="10" href="#opinion">✉ 意見を送る</a></div>
       </article>
       <article id="s11" class="card n">
         <a class="back" href="#chart" data-node="RV">▲ 図の該当ボックスに戻る</a>
@@ -641,7 +669,7 @@ flowchart TD
           <button type="button" class="cv w" data-q="w" data-v="11">🙏 望む未来に選ぶ</button>
           <button type="button" class="cv l" data-q="l" data-v="11">🔮 来そうな未来に選ぶ</button>
         </div>
-        <div class="links small"><a class="vlink" href="#v11">🌏 海外の読者の声（3件）</a><a class="opinion" data-scenario="⑪ 逆戻り" href="#opinion" target="_blank" rel="noopener">✉ 意見を送る</a></div>
+        <div class="links small"><a class="vlink" href="#v11">🌏 海外の読者の声（3件）</a><a class="opinion" data-scenario="11" href="#opinion">✉ 意見を送る</a></div>
       </article>
       <article id="s12" class="card n">
         <a class="back" href="#chart" data-node="SD">▲ 図の該当ボックスに戻る</a>
@@ -655,11 +683,17 @@ flowchart TD
           <button type="button" class="cv w" data-q="w" data-v="12">🙏 望む未来に選ぶ</button>
           <button type="button" class="cv l" data-q="l" data-v="12">🔮 来そうな未来に選ぶ</button>
         </div>
-        <div class="links small"><a class="vlink" href="#v12">🌏 海外の読者の声（2件）</a><a class="opinion" data-scenario="⑫ 自滅" href="#opinion" target="_blank" rel="noopener">✉ 意見を送る</a></div>
+        <div class="links small"><a class="vlink" href="#v12">🌏 海外の読者の声（2件）</a><a class="opinion" data-scenario="12" href="#opinion">✉ 意見を送る</a></div>
       </article>
     </div>
   </section>
 
+
+  <section class="voices jvoices" id="jvoices" aria-label="日本の読者の声">
+    <h2>日本の読者はこう語った</h2>
+    <p class="lede">このページの「意見を送る」から届いた意見のうち、運営者が確認したものを掲載しています。投稿者の見解はこのページの見解ではありません。</p>
+    <div id="jlist"><p class="jempty">まだ掲載された意見はありません。<a href="#opinion" class="opinion" data-scenario="0">✉ 最初のひとことを送る</a></p></div>
+  </section>
 
   <section class="voices" id="voices" aria-label="海外の読者の声">
     <h2>海外の読者はこう語った</h2>
@@ -846,7 +880,7 @@ flowchart TD
   <div id="vtoast" role="status" aria-live="polite" hidden></div>
   <footer class="disclaimer">
     <p>本書の表5.1（超知能（ASI）の有無・人類の存在・誰が制御するか）の区分に沿って、判断の順に12シナリオを並べたもの。丸数字は第5章での登場順、「≒」は日本人向けの喩え。シナリオのボックスをクリックすると、ページ下部の該当する解説へ移動する。赤枠の分岐点は、ダリオ・アモデイ氏のエッセイ<a href="https://darioamodei.com/post/we-must-pace-the-frontier" target="_blank" rel="noopener">「We Must Pace the Frontier」</a>が直接扱っている判断で、付箋から解説へ移動できる。付箋の写真のクレジットはページ下部「参考資料」に記載。アモデイ氏の写真は <a href="https://commons.wikimedia.org/wiki/File:Dario_Amodei_at_TechCrunch_Disrupt_2023_01_(cropped_2).jpg" target="_blank" rel="noopener">TechCrunch撮影（Wikimedia Commons）</a>、<a href="https://creativecommons.org/licenses/by/2.0/" target="_blank" rel="noopener">CC BY 2.0</a>、トリミングして使用。</p>
-    <p>各解説・要約はこのページ作成者によるもので、原文の主張の順序・強調は必ずしも同じではありません。「世界の読者はどの未来を選んだか」の数値はFLI公開グラフからの概算で公式集計ではありません。「あなたはどれを選ぶ？」の投票は匿名で、保存するのは選択した2つの番号・投票時刻・重複防止用にハッシュ化した接続元情報のみです。「海外の読者はこう語った」は公開投稿の趣旨を紹介目的で要約したもので、原文の転載・逐語訳ではなく、各投稿者の見解はこのページの見解ではありません。掲載に問題がある場合は意見フォームからお知らせください。著者・研究者の肖像はいずれもWikimedia Commonsで確認したCCライセンスの写真をトリミングして使用しています（クレジットは各カードに記載）。</p>
+    <p>各解説・要約はこのページ作成者によるもので、原文の主張の順序・強調は必ずしも同じではありません。「世界の読者はどの未来を選んだか」の数値はFLI公開グラフからの概算で公式集計ではありません。「あなたはどれを選ぶ？」の投票は匿名で、保存するのは選択した2つの番号・投票時刻・重複防止用にハッシュ化した接続元情報のみです。「意見を送る」で保存するのは、選んだシナリオ・本文・ニックネーム（任意）・送信時刻・重複防止用にハッシュ化した接続元情報のみで、運営者が確認したものだけを「日本の読者はこう語った」に掲載します（掲載後の取り下げも意見フォームから受け付けます）。「海外の読者はこう語った」は公開投稿の趣旨を紹介目的で要約したもので、原文の転載・逐語訳ではなく、各投稿者の見解はこのページの見解ではありません。掲載に問題がある場合は意見フォームからお知らせください。著者・研究者の肖像はいずれもWikimedia Commonsで確認したCCライセンスの写真をトリミングして使用しています（クレジットは各カードに記載）。</p>
   </footer>
 </div>
 <script>
@@ -902,17 +936,66 @@ flowchart TD
 </script>
 <script>
 (function(){
-  // ▼ Googleフォームを作ったら、この2行を差し替える ▼
-  var FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSfYUeYvghnDtw0gMVrY6yb7T2INkSSALneRRUFtz-YT6a6Fjg/viewform";
-  var SCENARIO_ENTRY = "entry.1468772564";
-  // ▲ ここまで ▲
-  var links=document.querySelectorAll('a.opinion');
-  if(!FORM_URL){ links.forEach(function(a){ a.style.display='none'; }); var box=document.getElementById('opinion'); if(box) box.style.display='none'; return; }
-  links.forEach(function(a){
-    var sc=a.getAttribute('data-scenario')||'全体について';
-    var url=FORM_URL+(FORM_URL.indexOf('?')>-1?'&':'?')+'usp=pp_url'+(SCENARIO_ENTRY?'&'+SCENARIO_ENTRY+'='+encodeURIComponent(sc):'');
-    a.setAttribute('href', url);
+  var NAMES=["全体・その他", "自由至上主義ユートピア", "慈悲深い独裁者", "平等主義ユートピア", "門番", "守護神", "奴隷の神", "征服者", "子孫", "動物園の飼育係", "1984", "逆戻り", "自滅"];
+  var CIRC=["", "①", "②", "③", "④", "⑤", "⑥", "⑦", "⑧", "⑨", "⑩", "⑪", "⑫"];
+  var LIVE=(location.hostname==='12futures.jp');
+  var box=document.getElementById('opinion'), sel=document.getElementById('op-sc'), body=document.getElementById('op-body'),
+      nick=document.getElementById('op-nick'), hp=document.getElementById('op-hp'), btn=document.getElementById('op-send'),
+      msg=document.getElementById('op-msg'), cnt=document.getElementById('op-n'), form=document.getElementById('opform');
+  if(!form) return;
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
+  // 「意見を送る」リンク：シナリオを選んだ状態でフォームを開く
+  document.addEventListener('click', function(e){
+    var a=e.target.closest('a.opinion'); if(!a) return;
+    e.preventDefault();
+    var sc=a.getAttribute('data-scenario')||'0';
+    sel.value=sc; box.open=true;
+    box.scrollIntoView({behavior:'smooth', block:'start'});
+    setTimeout(function(){ body.focus({preventScroll:true}); }, 500);
   });
+  body.addEventListener('input', function(){ cnt.textContent=body.value.length; });
+  function say(t, err){ msg.textContent=t; msg.className='opmsg'+(err?' err':''); }
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var text=body.value.trim();
+    if(text.length<4){ say('本文は4文字以上でお願いします', true); body.focus(); return; }
+    if(text.length>600){ say('本文は600文字以内でお願いします', true); return; }
+    if(!LIVE){ say('意見の送信は公開サイト（12futures.jp）で受け付けています', true); return; }
+    btn.disabled=true; say('送信中…');
+    fetch('/api/comment',{method:'POST',headers:{'content-type':'application/json'},
+      body:JSON.stringify({scenario:+sel.value, body:text, nick:nick.value.trim(), hp:hp.value})})
+    .then(function(r){ return r.json().then(function(j){ return {s:r.status, j:j}; }); })
+    .then(function(x){
+      if(x.s===200 && x.j.ok){
+        form.reset(); cnt.textContent='0'; say('受け付けました。運営者が確認したうえで掲載します。');
+        if(window.__toast) window.__toast('✉ 意見を受け付けました。確認後に「日本の読者はこう語った」に掲載します');
+      } else {
+        var m={limit:'短時間に送れる件数の上限に達しました。明日またお願いします',links:'リンクは1つまでにしてください',short:'本文が短すぎます',long:'本文が長すぎます',origin:'送信元を確認できませんでした'}[x.j&&x.j.error]||'送信に失敗しました（'+x.s+'）';
+        say(m, true);
+      }
+    }).catch(function(){ say('送信に失敗しました。通信環境を確認してください', true); })
+    .finally(function(){ btn.disabled=false; });
+  });
+
+  // 掲載済みの意見を読み込んで「日本の読者はこう語った」に表示
+  var list=document.getElementById('jlist'); if(!list||!LIVE) return;
+  fetch('/api/comments',{cache:'no-store'}).then(function(r){return r.json();}).then(function(d){
+    if(!d||!d.items||!d.items.length) return;
+    var by={}; d.items.forEach(function(it){ (by[it.scenario]=by[it.scenario]||[]).push(it); });
+    var order=[1,2,3,4,5,6,7,8,9,10,11,12,0], html='';
+    order.forEach(function(n){
+      var arr=by[n]; if(!arr) return;
+      var card=document.getElementById('s'+n), cls=card?(card.className.match(/\b[tng]\b/)||['t'])[0]:'all';
+      html+='<article id="j'+n+'" class="vblock j '+cls+'"><div class="vh"><span class="no">'+(n||'')+'</span><h3>'+esc(NAMES[n])+'</h3>'+(n?'<a class="jump" href="#s'+n+'">▲ 解説カードに戻る</a>':'')+'</div>';
+      arr.forEach(function(it){
+        html+='<div class="voice"><span class="ic">💬</span><div>'+esc(it.body).replace(/\n/g,'<br>')+'<span class="src">'+esc(it.nick||'匿名')+'（'+esc(it.date)+'）</span></div></div>';
+      });
+      html+='</article>';
+      // 解説カードにも「日本の読者の声」リンクを追加
+      if(card){ var links=card.querySelector('.links.small'); if(links){ var a=document.createElement('a'); a.className='vlink'; a.href='#j'+n; a.textContent='💬 日本の読者の声（'+arr.length+'件）'; links.insertBefore(a, links.querySelector('a.opinion')); } }
+    });
+    list.innerHTML=html;
+  }).catch(function(){});
 })();
 </script>
 <script>
@@ -943,6 +1026,7 @@ flowchart TD
   function save(o){ try{ localStorage.setItem('v12pick', JSON.stringify(o)); }catch(e){} }
   function name(n){ return n? CIRC[n]+' '+S[n][0] : '未選択'; }
   function toast(html, ms){ toastEl.innerHTML=html; toastEl.hidden=false; clearTimeout(tt); tt=setTimeout(function(){ toastEl.hidden=true; }, ms||3200); }
+  window.__toast=toast;
   function sync(){
     document.querySelectorAll('.pick, .cv').forEach(function(b){ var q=b.getAttribute('data-q'), v=+b.getAttribute('data-v'); b.setAttribute('aria-pressed', pick[q]===v?'true':'false'); });
     $('vb-w').textContent=name(pick.w); $('vb-l').textContent=name(pick.l);
