@@ -195,7 +195,7 @@ ${tile("私が望む未来", W, "want")}
 ${tile("こうなっちゃうだろう未来", L, "likely")}
 </div>
 <div class="cta">
-<p class="lead">超知能（ASI）と人間が共存する12のシナリオと、その分岐点を見にいく</p>
+<p class="lead">超知能（ASI）の進化と人間が交錯する<br>12のシナリオと、その分岐点を見にいく</p>
 <a class="big" href="${ORIGIN}/"><img src="${ORIGIN}/favicon.svg" alt="" width="34" height="34"><span>Go to 12futures.jp</span></a>
 <p class="note">LIFE 3.0（マックス・テグマーク）の将来シナリオを、インタラクティブな分岐図と日本語解説で読めるページ。登録不要</p>
 </div>
