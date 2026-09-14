@@ -11,5 +11,6 @@
   "d1_databases": [
     { "binding": "DB", "database_name": "life30-votes", "database_id": "b026b4b5-69ec-4498-930a-678ececf4353" }
   ],
-  "vars": { "IP_SALT": "12futures-2026-09" }
+  "vars": { "IP_SALT": "12futures-2026-09" },
+  "observability": { "enabled": true, "logs": { "enabled": true } }
 }
