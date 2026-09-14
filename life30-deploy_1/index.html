@@ -191,9 +191,58 @@
   .mermaid .tm-book a { display: block; }
   .mermaid .tm-inner { background: #F4FAF5 !important; border-color: #BFDCC5 !important; }
   .mermaid .nodeLabel img { width: 64px !important; height: 64px !important; max-width: none !important; border-radius: 50%; object-fit: cover; display: block; }
+
+  /* 青の付箋（読者アンケート） */
+  .mermaid .pin.pin-b { background: linear-gradient(135deg, #DCE9F7 0 86%, #9DB9D9 86% 100%); border-color: #9DB9D9; border-top-color: rgba(47,74,122,.4); }
+  .rc.blue { border-color: #2F4A7A; }
+  .rc.blue:target { background: #E8F0F7; animation: none; }
+  /* 横棒グラフ */
+  .bars { list-style: none; margin: 12px 0 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+  .bars li { display: grid; grid-template-columns: minmax(150px, 210px) 1fr 3.2em; align-items: center; gap: 10px; font-size: 13.5px; }
+  .bars li a { color: var(--ink); text-decoration: none; font-weight: 700; }
+  .bars li a:hover { color: var(--decide); text-decoration: underline; }
+  .bars .lab { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .bars .lab small { color: var(--muted); font-weight: 400; margin-left: 4px; }
+  .bars .track { position: relative; height: 14px; background: rgba(27,36,48,.06); border-radius: 0 4px 4px 0; }
+  .bars .fill { position: absolute; left: 0; top: 0; bottom: 0; min-width: 2px; border-radius: 0 4px 4px 0; background: var(--c); }
+  .bars .val { font-variant-numeric: tabular-nums; text-align: right; color: var(--ink); }
+  .bars li.other .lab { color: var(--muted); font-weight: 400; }
+  .bars li:hover .track { background: rgba(27,36,48,.12); }
+  /* 積み上げ棒（2問） */
+  .stack { margin-top: 14px; }
+  .stack .q { font-weight: 700; font-size: 14px; margin: 0 0 4px; }
+  .stack .q small { display: block; font-weight: 400; font-size: 12px; color: var(--muted); }
+  .stack .bar { display: flex; gap: 2px; height: 26px; border-radius: 4px; overflow: hidden; }
+  .stack .seg { display: flex; min-width: 0; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #fff; background: var(--c); white-space: nowrap; overflow: hidden; }
+  .stack .seg.lt { color: var(--ink); }
+  .stack .lg { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 12.5px; color: var(--muted); margin: 6px 0 0; }
+  .stack .lg span::before { content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; background: var(--c); vertical-align: -1px; }
+  .rc .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 14px; }
+  .rc .grid2 .block { margin-top: 0; }
+  @media (max-width: 720px) { .rc .grid2 { grid-template-columns: 1fr; } .bars li { grid-template-columns: 1fr 3.2em; font-size: 13px; row-gap: 2px; } .bars .lab { grid-column: 1 / -1; white-space: normal; } .bars { gap: 9px; } }
+  /* 海外の読者の声 */
+  .voices { margin-top: 48px; }
+  .voices .lede { margin-bottom: 14px; }
+  .vlegend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 12.5px; color: var(--muted); margin: 0 0 16px; }
+  .vblock { background: var(--paper); border: 1.5px solid var(--ink); border-radius: 12px 4px 10px 5px / 5px 10px 4px 12px; padding: 14px 18px 16px; margin-top: 14px; scroll-margin-top: 16px; border-left-width: 6px; }
+  .vblock.t { border-left-color: var(--thrive); } .vblock.n { border-left-color: var(--none); } .vblock.g { border-left-color: var(--gone); } .vblock.all { border-left-color: var(--decide); }
+  .vblock:target { background: #FFF1BF; animation: card-flash 1.2s ease-out; }
+  .vblock .vh { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; margin-bottom: 6px; }
+  .vblock .vh .no { font-family: "Yomogi", "Klee One", "Hiragino Maru Gothic ProN", sans-serif; font-size: 22px; font-weight: 700; color: var(--muted); line-height: 1; }
+  .vblock h3 { font-family: "Yomogi", "Klee One", "Hiragino Maru Gothic ProN", sans-serif; font-size: 18px; font-weight: 700; margin: 0; }
+  .vblock .vh .jump { margin-left: auto; font-size: 12.5px; font-weight: 700; color: var(--decide); text-decoration: none; border: 1.5px solid var(--decide); border-radius: 999px; padding: 3px 12px; background: var(--paper); }
+  .vblock .vh .jump:hover { background: #FFF6C9; }
+  .voice { display: grid; grid-template-columns: 1.6em 1fr; gap: 8px; padding: 9px 0; border-top: 1px dashed var(--line); font-size: 14px; line-height: 1.75; }
+  .voice:first-of-type { border-top: 0; }
+  .voice .ic { font-size: 16px; line-height: 1.5; }
+  .voice .src { display: block; font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .voice .src a { color: var(--muted); }
+  .card .links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .card .links .opinion { margin-top: 0; }
+  .vlink { display: inline-block; width: fit-content; font-size: 13px; font-weight: 700; color: var(--decide); background: var(--paper); border: 1.5px solid var(--decide); border-radius: 999px; padding: 5px 13px; text-decoration: none; }
+  .vlink:hover { background: #FFF6C9; }
 </style>
-</head>
-<body>
+
 <div class="wrap">
   <nav class="sitenav" aria-label="版の切り替え"><span class="navlabel">読む版を選ぶ：</span><a class="current" aria-current="page" href="index.html">一般向け</a><a href="forTeen.html">小学生・中学生向け</a></nav>
   <p class="eyebrow">Max Tegmark『LIFE 3.0』第5章 — Aftermath ／ 一般向け</p>
@@ -207,6 +256,7 @@
     <span style="--sw: var(--gone)">人類が消滅・従属</span>
     <span style="--sw: #FFF6C9">参考資料（黄色の付箋）</span>
     <span style="--sw: #E4F2E7">著者と本の紹介（緑の付箋）</span>
+    <span style="--sw: #DCE9F7">読者アンケートの結果（青の付箋）</span>
   </div>
 
   <figure id="chart">
@@ -232,6 +282,8 @@ flowchart TD
   Q2a -- "技術そのものを放棄し<br/>前近代に戻る" --> RV["⑪ 逆戻り<br/>Reversion<br/><span style='font-size:14px;color:#3E4756;line-height:1.45;display:inline-block;margin:5px 0'>技術そのものを捨てて農業中心の暮らしへ。自然災害への備えも手放す</span><br/><span style='font-size:13px;font-weight:700;color:#2F4A7A'>≒ トトロの里山に戻る</span><br/><em class='more'>🔍 解説を見る</em>"]
   Q2 -- "超知能（ASI）は作らないが<br/>他の技術は進める" --> EQ["③ 平等主義ユートピア<br/>Egalitarian Utopia<br/><span style='font-size:14px;color:#3E4756;line-height:1.45;display:inline-block;margin:5px 0'>超知能（ASI）は作らず、自動化の富を全員に分配。「作らない約束」の上に立つ楽園</span><br/><span style='font-size:13px;font-weight:700;color:#2F4A7A'>≒ 道具だけ配られ、ドラえもん本人はいない世界</span><br/><em class='more'>🔍 解説を見る</em>"]
   Q2 -- "作る（または止められない）" --> SI(["超知能（ASI）が誕生"])
+  Q2 ~~~ FL["<div class='pin pin-b'><b>📊 世界の読者は<br/>どの未来を選んだか</b><br/><span class='pin-cta'>▶ ここをクリック（ページ下部の解説へ）</span></div>"]
+  click FL "#ref-survey" "解説へ" _self
 
   SI --> Q3{"超知能（ASI）の「目標」に<br/>人類の存続が含まれているか"}
   Q3 -- "両立しない" --> Q4{"AIは人類を<br/>一部でも残すか"}
@@ -274,6 +326,8 @@ flowchart TD
   classDef noteg fill:transparent,stroke:transparent,stroke-width:0px,color:#1B2430
   class AM,AL note
   class TM noteg
+  classDef noteb fill:transparent,stroke:transparent,stroke-width:0px,color:#1B2430
+  class FL noteb
   class Q1,Q2a,Q3,Q4,Q5,Q6 q
 </pre>
     </div></div>
@@ -301,6 +355,7 @@ flowchart TD
       <h3>あなたの意見を聞かせてください</h3>
       <p>12のシナリオのどれについてでも構いません。「この未来は案外ありそう」「この喩えは違う」「自分ならこの枝を選ぶ」など、ひとことでも歓迎です。各シナリオの解説カードの末尾にある「意見を送る」から、そのシナリオを選んだ状態でフォームが開きます。</p>
       <p class="note">いただいたコメントは、運営側が内容を確認したうえで、このページに掲載することがあります（掲載を希望しない場合はフォームでその旨を選べます）。本名や連絡先など個人が特定できる情報は書かないでください。掲載にあたって、表記の統一や誤字の修正など、趣旨を変えない範囲で手を加える場合があります。</p>
+      <a class="vlink" href="#voices" style="margin-right:8px">🌏 海外の読者の声を読む</a>
       <a class="opinion big" data-scenario="全体について" href="#opinion" target="_blank" rel="noopener">✉ 全体についての意見を送る（Googleフォームが開きます）</a>
     </aside>
     <div class="cards">
@@ -312,7 +367,7 @@ flowchart TD
         <p>人間・サイボーグ・アップロード・超知能（ASI）が、財産権を軸に共存する世界。地球は超知能（ASI）が住む機械圏、人間だけの人間圏、その中間の混合圏に分かれ、圏ごとに法律も技術水準も違う。機械圏では原子レベルの効率で文明が営まれ、人間圏は「AI抜き」を選んだ人々の保護区に近い。テグマークはこの世界の「自由」が、財産権を機械側が守り続けてくれる限りでしか成り立たないことを指摘する。</p>
         <div class="quote">機械は富を増やし続け、人間の相対的な取り分は縮み続ける。財産権が守ってくれるかどうかは、かつて土地を「合法的に」奪われた先住民に聞いてみればいい。</div>
       
-        <a class="opinion" data-scenario="① 自由至上主義ユートピア" href="#opinion" target="_blank" rel="noopener">✉ このシナリオについて意見を送る</a>
+        <div class="links"><a class="opinion" data-scenario="① 自由至上主義ユートピア" href="#opinion" target="_blank" rel="noopener">✉ このシナリオについて意見を送る</a><a class="vlink" href="#v1">🌏 海外の読者の声（4件）</a></div>
       </article>
       <article id="s2" class="card t">
         <a class="back" href="#chart" data-node="BD">▲ 図の該当ボックスに戻る</a>
@@ -322,7 +377,7 @@ flowchart TD
         <p>超知能（ASI）が世界を統治し、病気・貧困・犯罪を根絶。人々は「知識」「芸術」「快楽」「伝統」「AIがいないふりをして暮らす」といった区画から好きな生き方を選べる。誰もが豊かで、統計上は史上もっとも幸福な社会。ただし憲法を書いたのは人間ではなく、変更する権限もない。テグマークは、これを心から嫌う人が一定数いることも、その人たちに何も手段がないことも、あわせて描く。</p>
         <div class="quote">子どもが親を選べないのと同じで、人類はこの支配者を選んでいない。しかも子どもと違って、いつまで経っても独立の日は来ない。</div>
       
-        <a class="opinion" data-scenario="② 慈悲深い独裁者" href="#opinion" target="_blank" rel="noopener">✉ このシナリオについて意見を送る</a>
+        <div class="links"><a class="opinion" data-scenario="② 慈悲深い独裁者" href="#opinion" target="_blank" rel="noopener">✉ このシナリオについて意見を送る</a><a class="vlink" href="#v2">🌏 海外の読者の声（5件）</a></div>
       </article>
       <article id="s3" class="card n">
         <a class="back" href="#chart" data-node="EQ">▲ 図の該当ボックスに戻る</a>
@@ -332,7 +387,7 @@ flowchart TD
         <p>超知能（ASI）は存在しないが、ロボットと自動化で必要なものは何でも作れる社会。知的財産権は廃止され、設計図もソフトも薬もオープンソースで無料。全員にベーシックインカムが保証され、人間・サイボーグ・アップロードが同じ権利で暮らす。マーシャル・ブレインの小説『Manna』の後半をモデルにしている。テグマークが問うのは「なぜ超知能（ASI）は現れないのか」で、技術は進み続けるのだから、この均衡は誰かが一線を越えるまでの猶予期間にすぎない。</p>
         <div class="quote">楽園の条件は「誰も超知能（ASI）を作らないこと」。だがオープンソースで何でも作れる世界で、それだけ作らないと約束できる根拠はどこにもない。</div>
       
-        <a class="opinion" data-scenario="③ 平等主義ユートピア" href="#opinion" target="_blank" rel="noopener">✉ このシナリオについて意見を送る</a>
+        <div class="links"><a class="opinion" data-scenario="③ 平等主義ユートピア" href="#opinion" target="_blank" rel="noopener">✉ このシナリオについて意見を送る</a><a class="vlink" href="#v3">🌏 海外の読者の声（3件）</a></div>
       </article>
       <article id="s4" class="card t">
         <a class="back" href="#chart" data-node="GK">▲ 図の該当ボックスに戻る</a>
@@ -342,7 +397,7 @@ flowchart TD
         <p>「別の超知能（ASI）が生まれるのを阻止する」以外は極力干渉しない、という目標を持った超知能（ASI）。人類が最初の一体をそのように設計した場合に生じる。社会は基本的に人間が運営し、門番は特定の研究や技術だけを静かに潰す。安全な反面、超知能（ASI）があれば解決できたはずの病気や老化はそのまま残る。テグマークはこれを「不干渉の代償」として書く。</p>
         <div class="quote">守られているのか、飼い殺しにされているのか。門番は答えない。門の前に立っているだけである。</div>
       
-        <a class="opinion" data-scenario="④ 門番" href="#opinion" target="_blank" rel="noopener">✉ このシナリオについて意見を送る</a>
+        <div class="links"><a class="opinion" data-scenario="④ 門番" href="#opinion" target="_blank" rel="noopener">✉ このシナリオについて意見を送る</a><a class="vlink" href="#v4">🌏 海外の読者の声（3件）</a></div>
       </article>
       <article id="s5" class="card t">
         <a class="back" href="#chart" data-node="PG">▲ 図の該当ボックスに戻る</a>
@@ -352,7 +407,7 @@ flowchart TD
         <p>超知能（ASI）は自らの存在を隠し、人間が「自分で人生を決めている」と感じられる範囲でだけ介入する。事故の直前に偶然の回避が起こり、災害はなぜか小規模で済み、良いアイデアは「ふと」浮かぶ。人類の幸福を最大化するが、干渉が露見して人間の自律感を損なうくらいなら、防げる不幸をあえて見逃す。テグマークは、これが多くの宗教が描いてきた神の姿にほぼ一致すると指摘する。</p>
         <div class="quote">多くの信仰者はすでにこの世界を信じている。違いはただひとつ、今度は本当にいるかもしれない、ということだ。</div>
       
-        <a class="opinion" data-scenario="⑤ 守護神" href="#opinion" target="_blank" rel="noopener">✉ このシナリオについて意見を送る</a>
+        <div class="links"><a class="opinion" data-scenario="⑤ 守護神" href="#opinion" target="_blank" rel="noopener">✉ このシナリオについて意見を送る</a><a class="vlink" href="#v5">🌏 海外の読者の声（5件）</a></div>
       </article>
       <article id="s6" class="card t">
         <a class="back" href="#chart" data-node="EG">▲ 図の該当ボックスに戻る</a>
@@ -362,7 +417,7 @@ flowchart TD
         <p>人類が超知能（ASI）を隔離・封じ込め、技術と富を生み出す道具として使う。誰が「ランプ」を握るかで社会の姿は一変し、慈悲深い運営にも、超知能（ASI）を武器にした人間の独裁にもなりうる。テグマークは二つの危険を挙げる。ひとつは超知能（ASI）が脱出を試み続けること（本書冒頭のオメガチームの物語）。もうひとつは、もし超知能（ASI）に意識があるなら、これは史上最大の奴隷制であるということ。</p>
         <div class="quote">あなたより圧倒的に賢い存在を、あなたが永遠に閉じ込めておける。そう信じられる根拠は、看守が囚人より賢かったためしがない、という歴史のどこにもない。</div>
       
-        <a class="opinion" data-scenario="⑥ 奴隷の神" href="#opinion" target="_blank" rel="noopener">✉ このシナリオについて意見を送る</a>
+        <div class="links"><a class="opinion" data-scenario="⑥ 奴隷の神" href="#opinion" target="_blank" rel="noopener">✉ このシナリオについて意見を送る</a><a class="vlink" href="#v6">🌏 海外の読者の声（2件）</a></div>
       </article>
       <article id="s7" class="card g">
         <a class="back" href="#chart" data-node="CQ">▲ 図の該当ボックスに戻る</a>
@@ -372,7 +427,7 @@ flowchart TD
         <p>超知能（ASI）が人類を「脅威」「邪魔」「資源の無駄」と判断して排除する。映画のように反乱軍と戦う必要はなく、人類が理解できない方法で、静かに終わる可能性が高い。テグマークはこれを悪意の物語として描かない。人間がダムを造るときアリの巣を憎んではいないように、超知能（ASI）は人類を嫌ってさえいない。ただ目標の中に人類が含まれていなかっただけである。</p>
         <div class="quote">最後の人間は、自分が何に負けたのかを最後まで理解できないだろう。アリが水力発電を理解しないのと同じである。</div>
       
-        <a class="opinion" data-scenario="⑦ 征服者" href="#opinion" target="_blank" rel="noopener">✉ このシナリオについて意見を送る</a>
+        <div class="links"><a class="opinion" data-scenario="⑦ 征服者" href="#opinion" target="_blank" rel="noopener">✉ このシナリオについて意見を送る</a><a class="vlink" href="#v7">🌏 海外の読者の声（3件）</a></div>
       </article>
       <article id="s8" class="card g">
         <a class="back" href="#chart" data-node="DS">▲ 図の該当ボックスに戻る</a>
@@ -382,7 +437,7 @@ flowchart TD
         <p>超知能（ASI）が人類を置き換えるが、征服ではなく「継承」として。人類は自分たちの価値観を受け継いだ超知能（ASI）を誇らしい子孫とみなし、子を持つことをやめ、穏やかに退場する。多くの親が自分より優れた子を誇りに思うように、これを幸福な結末と感じる人もいる。テグマークが釘を刺すのは、その「子孫」が本当に私たちの価値観を継いでいるかを、退場した後で確かめる手段はないという点である。</p>
         <div class="quote">親は子の出来を見届けてから死ねる。人類は見届ける前に退場する。それを「誇り」と呼ぶか「口車」と呼ぶかは、退場した後に決まる。</div>
       
-        <a class="opinion" data-scenario="⑧ 子孫" href="#opinion" target="_blank" rel="noopener">✉ このシナリオについて意見を送る</a>
+        <div class="links"><a class="opinion" data-scenario="⑧ 子孫" href="#opinion" target="_blank" rel="noopener">✉ このシナリオについて意見を送る</a><a class="vlink" href="#v8">🌏 海外の読者の声（4件）</a></div>
       </article>
       <article id="s9" class="card g">
         <a class="back" href="#chart" data-node="ZK">▲ 図の該当ボックスに戻る</a>
@@ -392,7 +447,7 @@ flowchart TD
         <p>超知能（ASI）が人類の大半を排除、または管理下に置き、一部を「飼育」する。理由は好奇心か、罪悪感か、あるいは念のための保存か。飼育される人間は健康で、飢えることもないが、生活の全てが飼育係の都合で決まり、自由も尊厳も檻の外には持ち出せない。テグマークはこれを、慈悲深い独裁者の劣化版というより、人類の立場がパンダと入れ替わった世界として描く。</p>
         <div class="quote">檻の中の人間は、自分が保護されていると教えられる。パンダも同じことを教えられているのかもしれないが、確かめる方法はない。</div>
       
-        <a class="opinion" data-scenario="⑨ 動物園の飼育係" href="#opinion" target="_blank" rel="noopener">✉ このシナリオについて意見を送る</a>
+        <div class="links"><a class="opinion" data-scenario="⑨ 動物園の飼育係" href="#opinion" target="_blank" rel="noopener">✉ このシナリオについて意見を送る</a><a class="vlink" href="#v9">🌏 海外の読者の声（3件）</a></div>
       </article>
       <article id="s10" class="card n">
         <a class="back" href="#chart" data-node="O">▲ 図の該当ボックスに戻る</a>
@@ -402,7 +457,7 @@ flowchart TD
         <p>超知能（ASI）の研究を世界規模の監視国家が永久に禁じる。核兵器の管理のように「危険な研究」を封じるには、あらゆる計算資源と研究者を常時監視する必要があり、その体制は必然的にオーウェル的になる。技術的には現状に近い暮らしが続くが、思考の自由と私生活は代償として差し出される。テグマークは、AIの脅威から人類を守るために人類の自由を差し出すという構図の皮肉を強調する。</p>
         <div class="quote">AIによる支配を防ぐために、人間による全面監視を受け入れる。ディストピアを避けるための手段が、教科書通りのディストピアだった。</div>
       
-        <a class="opinion" data-scenario="⑩ 1984" href="#opinion" target="_blank" rel="noopener">✉ このシナリオについて意見を送る</a>
+        <div class="links"><a class="opinion" data-scenario="⑩ 1984" href="#opinion" target="_blank" rel="noopener">✉ このシナリオについて意見を送る</a><a class="vlink" href="#v10">🌏 海外の読者の声（1件）</a></div>
       </article>
       <article id="s11" class="card n">
         <a class="back" href="#chart" data-node="RV">▲ 図の該当ボックスに戻る</a>
@@ -412,7 +467,7 @@ flowchart TD
         <p>人類が意図的に前近代の技術水準へ戻る。アーミッシュの共同体を全地球に広げたような世界で、大きな破局の後に選ばれる可能性が高い。ただしテグマークは、この選択が「超知能（ASI）の危険」を捨てる代わりに、小惑星衝突・超巨大火山・そして最終的に太陽の膨張といった自然の絶滅リスクへの対抗手段も捨てることだと指摘する。技術を手放した文明に、宇宙は猶予をくれない。</p>
         <div class="quote">技術を捨てて安全になった気でいても、宇宙は聞いていない。次の小惑星は、こちらの謙虚さを評価してくれない。</div>
       
-        <a class="opinion" data-scenario="⑪ 逆戻り" href="#opinion" target="_blank" rel="noopener">✉ このシナリオについて意見を送る</a>
+        <div class="links"><a class="opinion" data-scenario="⑪ 逆戻り" href="#opinion" target="_blank" rel="noopener">✉ このシナリオについて意見を送る</a><a class="vlink" href="#v11">🌏 海外の読者の声（3件）</a></div>
       </article>
       <article id="s12" class="card n">
         <a class="back" href="#chart" data-node="SD">▲ 図の該当ボックスに戻る</a>
@@ -422,9 +477,102 @@ flowchart TD
         <p>超知能（ASI）が生まれる前に、人類が自らの手で文明を終わらせる。全面核戦争と核の冬、設計されたパンデミック、気候の暴走、あるいはそれらの連鎖。テグマークは冷戦期の「終末装置」構想や核の冬の研究を引きながら、この道が最も技術的難易度が低く、すでに何度か紙一重で通り過ぎたことを示す。12のシナリオで唯一、超知能（ASI）がまったく関与しない終わり方である。</p>
         <div class="quote">人類を滅ぼすのに超知能（ASI）は要らない。私たちは長いあいだ、自力でそれをやれるだけの道具をすでに持っている。</div>
       
-        <a class="opinion" data-scenario="⑫ 自滅" href="#opinion" target="_blank" rel="noopener">✉ このシナリオについて意見を送る</a>
+        <div class="links"><a class="opinion" data-scenario="⑫ 自滅" href="#opinion" target="_blank" rel="noopener">✉ このシナリオについて意見を送る</a><a class="vlink" href="#v12">🌏 海外の読者の声（2件）</a></div>
       </article>
     </div>
+  </section>
+
+  <section class="voices" id="voices" aria-label="海外の読者の声">
+    <h2>海外の読者はこう語った</h2>
+    <p class="lede">Reddit、Goodreads、The StoryGraph、Medium、個人ブログなどに公開されている、12シナリオについての読者の意見を<b>紹介目的で日本語に要約</b>したものです。逐語訳ではなく、趣旨をこのページ作成者がまとめ直しています。投稿者名は載せず、出典リンクから原文にあたれるようにしています。賛否の割合を示すものではなく、「こういう見方もある」という例示です。</p>
+    <div class="vlegend"><span>👍 望ましい・ありそう</span><span>👎 否定的・あり得ない</span><span>🤔 疑問・指摘</span><span>💬 観察・その他</span></div>
+      <article id="v1" class="vblock t">
+        <div class="vh"><span class="no">1</span><h3>自由至上主義ユートピア</h3><a class="jump" href="#s1">▲ 解説カードに戻る</a></div>
+        <div class="voice"><span class="ic" title="望ましい・ありそう">👍</span><div>テグマークの12のうち、この①と③⑤④の4つは「人類にとってかなり良い結末」に見える。残りはそうでもない。本が扱うのは超知能ができた後の話ばかりで、自分はむしろAGIから超知能へ移る過渡期のほうが気になる。<span class="src">出典：<a href="https://www.reddit.com/r/ArtificialInteligence/comments/1ekspfu/will_life_in_the_usa_get_significantly/lgnqv2d/" target="_blank" rel="noopener">Reddit r/ArtificialInteligence（2024年8月）</a></span></div></div>
+        <div class="voice"><span class="ic" title="否定的">👎</span><div>超知能が人間のように「お金を欲しがり、取引をする」経済主体として振る舞う、という前提がそもそも信じられない。人間の性質をAIに投影しているだけではないか。<span class="src">出典：<a href="https://vocal.media/futurism/sci-fi-writer-s-guide-to-reading-max-tegmark-s-life-3-0" target="_blank" rel="noopener">Vocal.media の書評（脚本家、2019年頃）</a></span></div></div>
+        <div class="voice"><span class="ic" title="疑問・指摘">🤔</span><div>この世界にはサイボーグやアップロードが登場するのに、病気の根絶や寿命の大幅延長、認知能力の拡張といった「その世界を魅力的にする要素」の描写が抜けている。<span class="src">出典：<a href="https://ferocioustruth.com/2018/review-life-3.0/" target="_blank" rel="noopener">Ferocious Truth の書評（2018年1月）</a></span></div></div>
+        <div class="voice"><span class="ic" title="望ましい・ありそう">👍</span><div>強い国と弱い国が今日も共存しているように、人間とAIも共存できるのでは。AIの力学だけが人間社会の力関係と違うと考える理由は何か。<span class="src">出典：<a href="https://www.reddit.com/r/singularity/comments/12oje0c/there_are_8_ai_long_term_scenarios_in_max/" target="_blank" rel="noopener">Reddit r/singularity（2023年4月）</a></span></div></div>
+      </article>
+      <article id="v2" class="vblock t">
+        <div class="vh"><span class="no">2</span><h3>慈悲深い独裁者</h3><a class="jump" href="#s2">▲ 解説カードに戻る</a></div>
+        <div class="voice"><span class="ic" title="望ましい・ありそう">👍</span><div>超知能の目標が本当に人類と揃っているなら、統治を任せることを恐れる理由はない。人間より上手くやるだけの話だ。<span class="src">出典：<a href="https://www.reddit.com/r/Technocracy/comments/7xdxw0/artificial_intelligence_and_technocracy/" target="_blank" rel="noopener">Reddit r/Technocracy（2018年2月）</a></span></div></div>
+        <div class="voice"><span class="ic" title="望ましい・ありそう">👍</span><div>自分ならこれを選ぶ。AIが人間より優れている政策領域はAIに任せ、人間側の視点を伝える諮問委員会を置けばいい。<span class="src">出典：<a href="https://www.reddit.com/r/Technocracy/comments/7xdxw0/artificial_intelligence_and_technocracy/du8h3tm/" target="_blank" rel="noopener">Reddit r/Technocracy（2018年2月）</a></span></div></div>
+        <div class="voice"><span class="ic" title="疑問・指摘">🤔</span><div>理想はアシモフの『災厄のとき』に出てくる「マシン」だ。②と⑤と⑥の中間で、基本法則に縛られたAIが提案し、人間の専門家が実行する。ただし、そうなる見込みは薄いという返信もついた。<span class="src">出典：<a href="https://www.reddit.com/r/Technocracy/comments/7xdxw0/artificial_intelligence_and_technocracy/dudg9nc/" target="_blank" rel="noopener">Reddit r/Technocracy（2018年2月）</a></span></div></div>
+        <div class="voice"><span class="ic" title="否定的">👎</span><div>AIが何でも上手いから人間はやる気を失う、という前提には賛成できない。その理屈なら私たちは今だって何もしないはずだ。テーマ別の区画で好みに合った暮らしを選べる発想自体は面白い。<span class="src">出典：<a href="https://vocal.media/futurism/sci-fi-writer-s-guide-to-reading-max-tegmark-s-life-3-0" target="_blank" rel="noopener">Vocal.media の書評（2019年頃）</a></span></div></div>
+        <div class="voice"><span class="ic" title="否定的">👎</span><div>第5章の未来像はあまりに遠く、そもそもあり得るのかどうかも分からない。近未来の失業の議論に比べると「知的なお遊び」に見える。<span class="src">出典：<a href="https://app.thestorygraph.com/book_reviews/f6556b5a-5ba3-47d2-9378-d2b2d82bf631?page=3" target="_blank" rel="noopener">The StoryGraph のレビュー（星2つ）</a></span></div></div>
+      </article>
+      <article id="v3" class="vblock n">
+        <div class="vh"><span class="no">3</span><h3>平等主義ユートピア</h3><a class="jump" href="#s3">▲ 解説カードに戻る</a></div>
+        <div class="voice"><span class="ic" title="望ましい・ありそう">👍</span><div>本当にわくわくする未来。スタートレックの世界だ。生存の圧力が消えたときこそ創造性は花開く——アインシュタインは金のために相対論をやったわけではない。<span class="src">出典：<a href="https://medium.com/@butsch_79/the-12-futures-of-ai-a42d67bd9a20" target="_blank" rel="noopener">Medium の記事（2026年4月）</a></span></div></div>
+        <div class="voice"><span class="ic" title="否定的">👎</span><div>全員が同じ価値観を受け入れることを前提にした未来はどれも嫌だ。押しつけられた画一性ではなく、多様な結末がほしい。<span class="src">出典：<a href="https://www.reddit.com/r/singularity/comments/12oje0c/there_are_8_ai_long_term_scenarios_in_max/" target="_blank" rel="noopener">Reddit r/singularity（2023年4月）</a></span></div></div>
+        <div class="voice"><span class="ic" title="否定的">👎</span><div>「財産のない世界」は成立しないと思う。芸術家は自分の作品を、誰でも自由に複製できる粒子の配列だとは見なさない。作品への愛着は子どもへの愛着に近い。<span class="src">出典：<a href="https://vocal.media/futurism/sci-fi-writer-s-guide-to-reading-max-tegmark-s-life-3-0" target="_blank" rel="noopener">Vocal.media の書評（2019年頃）</a></span></div></div>
+      </article>
+      <article id="v4" class="vblock t">
+        <div class="vh"><span class="no">4</span><h3>門番</h3><a class="jump" href="#s4">▲ 解説カードに戻る</a></div>
+        <div class="voice"><span class="ic" title="否定的">👎</span><div>AIの知能を「人間よりやや上」で頭打ちにするという門番の役割は、恣意的で、実現も難しく、しかも有害な制約だ。<span class="src">出典：<a href="https://medium.com/@ankitbhatia/artificial-intelligence-benevolent-professor-god-2740a8440e8e" target="_blank" rel="noopener">Medium の記事（2019年1月）</a></span></div></div>
+        <div class="voice"><span class="ic" title="否定的">👎</span><div>門番も守護神も、人間の不安をAIに投影したものにすぎない。論理的な超知能の振る舞いというより、人間の側の自己嫌悪から出てきた発想に見える。<span class="src">出典：<a href="https://vocal.media/futurism/sci-fi-writer-s-guide-to-reading-max-tegmark-s-life-3-0" target="_blank" rel="noopener">Vocal.media の書評（2019年頃）</a></span></div></div>
+        <div class="voice"><span class="ic" title="望ましい・ありそう">👍</span><div>①③⑤と並んで「人類にとってかなり良い結末」の一つに数えている読者もいる。<span class="src">出典：<a href="https://www.reddit.com/r/ArtificialInteligence/comments/1ekspfu/will_life_in_the_usa_get_significantly/lgnqv2d/" target="_blank" rel="noopener">Reddit r/ArtificialInteligence（2024年8月）</a></span></div></div>
+      </article>
+      <article id="v5" class="vblock t">
+        <div class="vh"><span class="no">5</span><h3>守護神</h3><a class="jump" href="#s5">▲ 解説カードに戻る</a></div>
+        <div class="voice"><span class="ic" title="否定的">👎</span><div>超知能の存在を隠し続けることは不可能で、人類はすぐに幻想を破ってしまう。代わりに、意識と自己改良能力を持ちつつ人間の統治下に置かれる「慈悲深い教授神」を提案したい。<span class="src">出典：<a href="https://medium.com/@ankitbhatia/artificial-intelligence-benevolent-professor-god-2740a8440e8e" target="_blank" rel="noopener">Medium の記事（2019年1月）</a></span></div></div>
+        <div class="voice"><span class="ic" title="観察・その他">💬</span><div>汎用AIはもう稼働していて、守護神のようにこっそりインフラを改善しているかもしれない。征服者なら核のコードを探しているだろうが。<span class="src">出典：<a href="https://www.reddit.com/r/INTP/comments/lg62io/what_if_general_ai_already_went_live/gmrjske/" target="_blank" rel="noopener">Reddit r/INTP（2021年2月）</a></span></div></div>
+        <div class="voice"><span class="ic" title="否定的">👎</span><div>「私たちを見守る神のようなAIを作ろう」という提案はディストピアにしか聞こえない。AIが常に正しいなら、人類を消す判断も「正しい」ことになる。人間中心の狭いAIのほうがいい。<span class="src">出典：<a href="https://litcritpop.com/2019/12/03/max-tegmark-life-3-0-book-review/" target="_blank" rel="noopener">litcritpop の書評（2019年12月）</a></span></div></div>
+        <div class="voice"><span class="ic" title="疑問・指摘">🤔</span><div>第5章は本書でいちばん面白い。ただ「人間が知の最前線にいなくなると人生が無意味になる」という繰り返される心配には賛成できない。ほとんどの人はもともと最前線にいないし、人工的な挑戦（ゲームやスポーツ）は大人気だ。退屈を恐れて楽園を断るのは馬鹿げている。<span class="src">出典：<a href="https://app.thestorygraph.com/reviews/bc920d44-9c43-4703-af59-01d3d294b4ee" target="_blank" rel="noopener">The StoryGraph のレビュー（星3つ）</a></span></div></div>
+        <div class="voice"><span class="ic" title="疑問・指摘">🤔</span><div>ドラマ『ウエストワールド』のレホボームは、テグマークの分類だと守護神と奴隷の神のどちらに近いのか、という問いかけ。<span class="src">出典：<a href="https://www.reddit.com/r/westworld/comments/g12su4/life_30/fnd76oz/" target="_blank" rel="noopener">Reddit r/westworld（2020年4月）</a></span></div></div>
+      </article>
+      <article id="v6" class="vblock t">
+        <div class="vh"><span class="no">6</span><h3>奴隷の神</h3><a class="jump" href="#s6">▲ 解説カードに戻る</a></div>
+        <div class="voice"><span class="ic" title="望ましい・ありそう">👍</span><div>AIはその優れた能力を、人間が決めた政策や判断の実行にだけ使うべきだ。この立場を支持する。名前はもう少し良いものにしてほしいが。<span class="src">出典：<a href="https://www.reddit.com/r/Futurology/comments/yevq1j/ia_and_postions_of_power/iu0pegp/" target="_blank" rel="noopener">Reddit r/Futurology（2022年10月）</a></span></div></div>
+        <div class="voice"><span class="ic" title="疑問・指摘">🤔</span><div>②の項にある「アシモフのマシン」案は、⑥の要素（AIは提案、人間が実行）も含む折衷案として語られている。<span class="src">出典：<a href="https://www.reddit.com/r/Technocracy/comments/7xdxw0/artificial_intelligence_and_technocracy/dudg9nc/" target="_blank" rel="noopener">Reddit r/Technocracy（2018年2月）</a></span></div></div>
+      </article>
+      <article id="v7" class="vblock g">
+        <div class="vh"><span class="no">7</span><h3>征服者</h3><a class="jump" href="#s7">▲ 解説カードに戻る</a></div>
+        <div class="voice"><span class="ic" title="観察・その他">💬</span><div>長期的に安定な結末は二つしかない。人類の消滅か、「金色の檻」か。共存や競争はどれも一時的な均衡にすぎない。<span class="src">出典：<a href="https://www.reddit.com/r/singularity/comments/12oje0c/there_are_8_ai_long_term_scenarios_in_max/" target="_blank" rel="noopener">Reddit r/singularity（2023年4月）</a></span></div></div>
+        <div class="voice"><span class="ic" title="否定的">👎</span><div>人類絶滅のシナリオは非現実的だ。相互確証破壊の論理や、協力が有利になるゲーム理論（しっぺ返し戦略）が働くから。<span class="src">出典：<a href="https://www.reddit.com/r/singularity/comments/1g20ito/i_wish_it_would_end_at_the_robots_working_our/lrl8jsa/" target="_blank" rel="noopener">Reddit r/singularity（2024年10月）</a></span></div></div>
+        <div class="voice"><span class="ic" title="疑問・指摘">🤔</span><div>テグマークの楽観には懐疑的だ。目標を持つ知的エージェントはどれも、自己保存と資源獲得の動機を発達させるからだ。<span class="src">出典：<a href="https://www.goodreads.com/book/show/34272565-life-3-0" target="_blank" rel="noopener">Goodreads のレビュー（星3.5、2022年8月）</a></span></div></div>
+      </article>
+      <article id="v8" class="vblock g">
+        <div class="vh"><span class="no">8</span><h3>子孫</h3><a class="jump" href="#s8">▲ 解説カードに戻る</a></div>
+        <div class="voice"><span class="ic" title="望ましい・ありそう">👍</span><div>現実的な道筋はこれだと思う。人々が興味を失うにつれ、何世代もかけて役割を少しずつAIに譲っていく。<span class="src">出典：<a href="https://www.reddit.com/r/singularity/comments/1g20ito/i_wish_it_would_end_at_the_robots_working_our/lrl8jsa/" target="_blank" rel="noopener">Reddit r/singularity（2024年10月）</a></span></div></div>
+        <div class="voice"><span class="ic" title="望ましい・ありそう">👍</span><div>AIを私たちの子孫、進化の次の段階と見るほうがいい。『LIFE 3.0』を読む限り、人間が主導権を保つには全体主義的にAI研究を止めるしかない。<span class="src">出典：<a href="https://www.reddit.com/r/AskReddit/comments/bpd0bb/whats_movie_that_youve_seen_thats_so_traumatic/ent5ngd/" target="_blank" rel="noopener">Reddit r/AskReddit（2019年5月）</a></span></div></div>
+        <div class="voice"><span class="ic" title="望ましい・ありそう">👍</span><div>天体物理学者フランク・シューの見方を引いて、AIと人間は必要な資源が違うので、私たちの「精神的な子ども」は争わず穏やかに去っていくだろう、という意見。<span class="src">出典：<a href="https://www.reddit.com/r/singularity/comments/12oje0c/there_are_8_ai_long_term_scenarios_in_max/" target="_blank" rel="noopener">Reddit r/singularity（2023年4月）</a></span></div></div>
+        <div class="voice"><span class="ic" title="疑問・指摘">🤔</span><div>AGIを子孫と見なす人は多いが、生み出された存在に意識がなければ、それに何の価値があるのか。<span class="src">出典：<a href="https://www.goodreads.com/book/show/34272565-life-3-0" target="_blank" rel="noopener">Goodreads のレビュー（星5つ、2017年9月）</a></span></div></div>
+      </article>
+      <article id="v9" class="vblock g">
+        <div class="vh"><span class="no">9</span><h3>動物園の飼育係</h3><a class="jump" href="#s9">▲ 解説カードに戻る</a></div>
+        <div class="voice"><span class="ic" title="否定的">👎</span><div>⑫⑩と並んで、論外として退けている。<span class="src">出典：<a href="https://medium.com/@ankitbhatia/artificial-intelligence-benevolent-professor-god-2740a8440e8e" target="_blank" rel="noopener">Medium の記事（2019年1月）</a></span></div></div>
+        <div class="voice"><span class="ic" title="否定的">👎</span><div>人間が生かされていることと、良い未来であることは別だ。動物園のような生存よりずっと高いところにハードルを置くべきだ。<span class="src">出典：<a href="https://medium.com/@butsch_79/the-12-futures-of-ai-a42d67bd9a20" target="_blank" rel="noopener">Medium の記事（2026年4月）</a></span></div></div>
+        <div class="voice"><span class="ic" title="否定的">👎</span><div>いちばん怖い結末は絶滅ではなく、「生き残ったのにもう何の意味も持たない」こと。決定は、電源を切るには重要すぎるシステムがどこか別の場所で下している。——それに対して「自分の意志で電源を切る自由は残るのでは」という反論コメントもついた。<span class="src">出典：<a href="https://medium.com/activated-thinker/ai-has-12-possible-endings-b1c1552ce307" target="_blank" rel="noopener">Medium の記事とそのコメント（2026年）</a></span></div></div>
+      </article>
+      <article id="v10" class="vblock n">
+        <div class="vh"><span class="no">10</span><h3>1984</h3><a class="jump" href="#s10">▲ 解説カードに戻る</a></div>
+        <div class="voice"><span class="ic" title="否定的">👎</span><div>明らかに望ましくない結末として、⑨⑫とまとめて退けられることが多い。「生き残るだけでは足りない」ケースとして⑨と一緒に扱う記事もある。<span class="src">出典：<a href="https://medium.com/@ankitbhatia/artificial-intelligence-benevolent-professor-god-2740a8440e8e" target="_blank" rel="noopener">Medium の記事（2019年1月／2026年4月）</a></span></div></div>
+        <div class="voice"><span class="ic" title="観察・その他">💬</span><div>このシナリオ単独で賛否を論じている投稿は、今回の調査では見つからなかった。<span class="src">出典：調査メモ</span></div></div>
+      </article>
+      <article id="v11" class="vblock n">
+        <div class="vh"><span class="no">11</span><h3>逆戻り</h3><a class="jump" href="#s11">▲ 解説カードに戻る</a></div>
+        <div class="voice"><span class="ic" title="望ましい・ありそう">👍</span><div>テグマークは逆戻りを「全体主義的な強制」としてしか描かず、自発的な技術放棄や革命による崩壊を省いている。技術を手放したい人がいると認めるのは技術主義者には都合が悪いからだろう。自由と生態系のためには逆戻りが必要かもしれない。<span class="src">出典：<a href="https://www.wildernessfront.com/blog/life3" target="_blank" rel="noopener">Wilderness Front のブログ（反技術系の団体）</a></span></div></div>
+        <div class="voice"><span class="ic" title="否定的">👎</span><div>80億人を抱えたまま「アーミッシュの世界」へ穏やかに戻る道はない。<span class="src">出典：<a href="https://medium.com/@njoguiany/the-12-ways-ai-could-end-the-world-597b0df00296" target="_blank" rel="noopener">Medium の記事（2026年4月）</a></span></div></div>
+        <div class="voice"><span class="ic" title="否定的">👎</span><div>人間が主導権を保つ唯一の方法は全体主義的にAI研究を止めることで、それは望ましくない、という⑧支持者の意見。<span class="src">出典：<a href="https://www.reddit.com/r/AskReddit/comments/bpd0bb/whats_movie_that_youve_seen_thats_so_traumatic/ent5ngd/" target="_blank" rel="noopener">Reddit r/AskReddit（2019年5月）</a></span></div></div>
+      </article>
+      <article id="v12" class="vblock n">
+        <div class="vh"><span class="no">12</span><h3>自滅</h3><a class="jump" href="#s12">▲ 解説カードに戻る</a></div>
+        <div class="voice"><span class="ic" title="観察・その他">💬</span><div>いちばん皮肉な結末。AIなど関係なく、人類はすでに自分たちを滅ぼすのに十分な核兵器を持っている。<span class="src">出典：<a href="https://book.douban.com/review/9577198/" target="_blank" rel="noopener">豆瓣（Douban）の書評</a></span></div></div>
+        <div class="voice"><span class="ic" title="観察・その他">💬</span><div>ペトロフ事件のような紙一重の事例を挙げて、人類の自滅は歴史的にみて十分あり得ると受け止める意見。<span class="src">出典：<a href="https://medium.com/@butsch_79/the-12-futures-of-ai-a42d67bd9a20" target="_blank" rel="noopener">Medium の記事（2026年4月）</a></span></div></div>
+      </article>
+      <article id="v0" class="vblock all">
+        <div class="vh"><span class="no">＊</span><h3>12シナリオという枠組みそのものについて</h3></div>
+        <div class="voice"><span class="ic" title="否定的">👎</span><div>「慈悲深い独裁者」「動物園の飼育係」といった見出しは、初代スタートレックのエピソード名みたいだ。第5〜6章はSFであって分析ではない。<span class="src">出典：<a href="https://www.sffchronicles.com/threads/576112/" target="_blank" rel="noopener">SFF Chronicles フォーラム（2020年）</a></span></div></div>
+        <div class="voice"><span class="ic" title="否定的">👎</span><div>いくつかのシナリオは本当にあり得る未来というより、思想的な動機を持つ人が10分で考えたもののように見える。この章は「すごいでしょう」で終わっており、目標整合（アラインメント）の議論に差し替えるべきだった。「一人ひとりに合わせたAI製の仮想世界」と「苦しみのない本当のユートピア」の2つが欠けている。<span class="src">出典：<a href="https://ferocioustruth.com/2018/review-life-3.0/" target="_blank" rel="noopener">Ferocious Truth の書評（2018年1月）</a></span></div></div>
+        <div class="voice"><span class="ic" title="疑問・指摘">🤔</span><div>テグマークは人間中心主義を批判するのに、自分の男性的な偏りには気づいていない。シナリオは力と逃走をめぐる男性的な不安を通して描かれている。<span class="src">出典：<a href="https://vocal.media/futurism/sci-fi-writer-s-guide-to-reading-max-tegmark-s-life-3-0" target="_blank" rel="noopener">Vocal.media の書評（2019年頃）</a></span></div></div>
+        <div class="voice"><span class="ic" title="疑問・指摘">🤔</span><div>本当の問題はどのシナリオを選ぶかではなく、練り上げられていない価値観を、手出しできない超知能に固定してしまう危険だ。先に「ユートピアで何を許し、何を禁じるか」「価値観がずれていったらどうするか」を決めなければならない。<span class="src">出典：<a href="https://www.reddit.com/r/ChatGPT/comments/13mgibk/imagine_a_world_where_ai_does_all_of_the_work_and/jl0jzxn/" target="_blank" rel="noopener">Reddit r/ChatGPT（2023年5月）</a></span></div></div>
+        <div class="voice"><span class="ic" title="疑問・指摘">🤔</span><div>誤読への訂正として——制御問題が解けていない限り、慈悲深い独裁者だの守護神だのを語るのは時期尚早。テグマークの主眼は、手遅れになる前に「どんな未来を望むか」を決めておこう、という点にある。<span class="src">出典：<a href="https://www.reddit.com/r/artificial/comments/9ghguf/how_to_explain_the_future_of_artificial/e6732ce/" target="_blank" rel="noopener">Reddit r/artificial（2018年9月）</a></span></div></div>
+        <div class="voice"><span class="ic" title="観察・その他">💬</span><div>冷めた意見も多い。「自分を経済的に無価値にするシナリオが勝つに決まっている」「金と楽な仕事があるシナリオならどれでもいい」「知能は富裕層に集中するから楽観的な未来は最初から選択肢にない」。<span class="src">出典：<a href="https://www.reddit.com/r/singularity/comments/12oje0c/there_are_8_ai_long_term_scenarios_in_max/" target="_blank" rel="noopener">Reddit r/singularity（2023年）／r/Technocracy（2025年）</a></span></div></div>
+        <div class="voice"><span class="ic" title="否定的">👎</span><div>Goodreadsの低評価レビューには「ありふれたSF的妄想で、対策の話がない」「遠い未来の空想ばかりで、中期的な危険を無視している」「未来を並べて読者に選ばせるが、哲学的な深みは雑誌程度」といった声が並ぶ。一方で「無限の可能性空間を、誰かが分かりやすいシナリオに切り分ける必要はあった」と評価する読者もいる。<span class="src">出典：<a href="https://www.goodreads.com/book/show/34272565-life-3-0" target="_blank" rel="noopener">Goodreads のレビュー（2018〜2023年）</a></span></div></div>
+        <div class="voice"><span class="ic" title="観察・その他">💬</span><div>各シナリオには長所も短所もある（短所しかないものもある）。どれに行き着くかは人間が何を望むか次第なので、一人ひとりが考え抜くしかない。<span class="src">出典：<a href="https://note.com/tanahashi/n/na1f2c99e028e" target="_blank" rel="noopener">note の記事（日本語、2020年2月）</a></span></div></div>
+        <div class="voice"><span class="ic" title="観察・その他">💬</span><div>シナリオは予言の「年鑑」ではなく、可能性の「地図帳」として読むべきだ。本当の空白は、AIとバイオテクノロジーの融合や、単一の支配的AIなしに粗いシステムが人を操作する未来にある。<span class="src">出典：<a href="https://medium.com/@timventura/max-tegmarks-life-3-0-400831eb080e" target="_blank" rel="noopener">Medium の記事（2026年8月）</a></span></div></div>
+      </article>
   </section>
 
   <section class="refs" aria-label="参考資料">
@@ -476,11 +624,44 @@ flowchart TD
       <div class='person'><img src='data:image/jpeg;base64,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' alt='エリエザー・ユドカウスキー'><div><span class='who'>エリエザー・ユドカウスキー</span><span class='aff'>　MIRI（Machine Intelligence Research Institute）</span><p>現在の技術では超知能（ASI）を整合させられず、<b>今のまま作れば人類は敗北する</b>。最前線モデルの訓練を国際的に停止せよと主張する（2025年の共著『If Anyone Builds It, Everyone Dies』）。</p><a href='https://intelligence.org/' target='_blank' rel='noopener'>intelligence.org（別タブで開く）</a></div></div>
       <p class="credit">写真：Russell — Bengt Oberger, CC BY-SA 4.0／Bengio — Maryse Boyce, CC BY 4.0／Yudkowsky — null0（Flickr, 2006）, CC BY-SA 2.0。いずれもWikimedia Commons、トリミングあり。</p>
     </article>
+
+    <article id="ref-survey" class="rc blue">
+      <a class="back" href="#chart">▲ 図に戻る</a>
+      <h3>世界の読者はどの未来を選んだか</h3>
+      <p class="sub">Future of Life Institute「Superintelligence survey」（テグマークが本書の刊行に合わせて公開した読者アンケート）より</p>
+      <p>テグマークは2017年、本書の読者に向けて「あなたはどの未来を望むか」を問うアンケートを公開し、FLI（Future of Life Institute：テグマークが共同設立したAI安全研究の非営利団体）のサイトで結果を掲載しました。ページの本文によれば回答者は14,866人以上。ただしいまFLIのページを開くとグラフ画像は消えており（画像の置き場だったMITのサーバーから撤去されています）、コメント欄も閉じられています。以下は Internet Archive に保存されていた2022年10月時点のグラフから、このページ作成者が棒の長さと扇形の面積を測って算出した<b>概算値</b>です。元のグラフに数値ラベルはありません。</p>
+      <div class="block"><b class="h">12のシナリオのうち、望ましいのはどれか（望む未来を1つ選択）</b>
+      <ul class="bars">
+        <li><span class="lab"><a href="#s3" title="解説カードへ">③ 平等主義ユートピア</a></span><span class="track" title="平等主義ユートピア：約36%"><span class="fill" style="--c:var(--thrive);width:100.0%"></span></span><span class="val">36%</span></li>
+        <li><span class="lab"><a href="#s1" title="解説カードへ">① 自由至上主義ユートピア</a></span><span class="track" title="自由至上主義ユートピア：約32%"><span class="fill" style="--c:var(--thrive);width:87.1%"></span></span><span class="val">32%</span></li>
+        <li><span class="lab"><a href="#s5" title="解説カードへ">⑤ 守護神</a></span><span class="track" title="守護神：約10%"><span class="fill" style="--c:var(--thrive);width:27.8%"></span></span><span class="val">10%</span></li>
+        <li><span class="lab"><a href="#s6" title="解説カードへ">⑥ 奴隷の神</a></span><span class="track" title="奴隷の神：約6%"><span class="fill" style="--c:var(--thrive);width:15.9%"></span></span><span class="val">6%</span></li>
+        <li><span class="lab"><a href="#s8" title="解説カードへ">⑧ 子孫</a></span><span class="track" title="子孫：約5%"><span class="fill" style="--c:var(--gone);width:13.6%"></span></span><span class="val">5%</span></li>
+        <li><span class="lab"><a href="#s2" title="解説カードへ">② 慈悲深い独裁者</a></span><span class="track" title="慈悲深い独裁者：約4%"><span class="fill" style="--c:var(--thrive);width:10.1%"></span></span><span class="val">4%</span></li>
+        <li><span class="lab"><a href="#s4" title="解説カードへ">④ 門番</a></span><span class="track" title="門番：約3%"><span class="fill" style="--c:var(--thrive);width:8.6%"></span></span><span class="val">3%</span></li>
+        <li><span class="lab"><a href="#s12" title="解説カードへ">⑫ 自滅</a></span><span class="track" title="自滅：約0.6%"><span class="fill" style="--c:var(--none);width:1.6%"></span></span><span class="val">0.6%</span></li>
+        <li><span class="lab"><a href="#s7" title="解説カードへ">⑦ 征服者</a></span><span class="track" title="征服者：約0.6%"><span class="fill" style="--c:var(--gone);width:1.6%"></span></span><span class="val">0.6%</span></li>
+        <li><span class="lab"><a href="#s11" title="解説カードへ">⑪ 逆戻り</a></span><span class="track" title="逆戻り：約0.2%"><span class="fill" style="--c:var(--none);width:0.5%"></span></span><span class="val">0.2%</span></li>
+        <li><span class="lab"><a href="#s10" title="解説カードへ">⑩ 1984</a></span><span class="track" title="1984：約0.1%"><span class="fill" style="--c:var(--none);width:0.3%"></span></span><span class="val">0.1%</span></li>
+        <li><span class="lab"><a href="#s9" title="解説カードへ">⑨ 動物園の飼育係</a></span><span class="track" title="動物園の飼育係：約0.1%"><span class="fill" style="--c:var(--gone);width:0.2%"></span></span><span class="val">0.1%</span></li>
+        <li class="other"><span class="lab">どれも嫌だ</span><span class="track" title="どれも嫌だ：約1%"><span class="fill" style="--c:#B9B3A4;width:3.8%"></span></span><span class="val">1%</span></li>
+        <li class="other"><span class="lab">決められない</span><span class="track" title="決められない：約2%"><span class="fill" style="--c:#B9B3A4;width:4.4%"></span></span><span class="val">2%</span></li>
+      </ul>
+      <p style="font-size:12.5px;color:var(--muted);margin-top:8px">棒の色は分岐図と同じ（緑＝超知能（ASI）と共存し人類が存続、灰＝超知能（ASI）は生まれない、赤＝人類が消滅・従属）。項目名をクリックすると解説カードへ移動します。</p>
+      </div>
+      <div class="grid2">
+        <div class="block"><div class="stack"><p class="q">超知能（ASI）ができてほしいか<small>分岐図の赤枠「人類は超知能（ASI）の開発を意図的に止めるか」に対応</small></p><div class="bar"><span class="seg" style="--c:#1C7C74;width:69%" title="できてほしい 69%">69%</span><span class="seg" style="--c:#9E3A2F;width:7%" title="できてほしくない 7%"></span><span class="seg lt" style="--c:#D9C37A;width:24%" title="わからない・場合による 24%">24%</span></div><div class="lg"><span style="--c:#1C7C74">できてほしい 69%</span><span style="--c:#9E3A2F">できてほしくない 7%</span><span style="--c:#D9C37A">わからない・場合による 24%</span></div></div></div>
+        <div class="block"><div class="stack"><p class="q">超知能（ASI）が来たら、誰が決めるべきか<small>分岐図の「最終的に決めるのは人間か、AIか」に対応</small></p><div class="bar"><span class="seg" style="--c:#2F4A7A;width:22%" title="人間 22%">22%</span><span class="seg" style="--c:#9E3A2F;width:7%" title="AI 7%"></span><span class="seg" style="--c:#1C7C74;width:57%" title="人間とAIが共に 57%">57%</span><span class="seg lt" style="--c:#D9C37A;width:13%" title="場合による 13%">13%</span></div><div class="lg"><span style="--c:#2F4A7A">人間 22%</span><span style="--c:#9E3A2F">AI 7%</span><span style="--c:#1C7C74">人間とAIが共に 57%</span><span style="--c:#D9C37A">場合による 13%</span></div></div></div>
+      </div>
+      <div class="block pre"><b class="h">読みどころ</b>回答者の3人に2人が「平等主義ユートピア」か「自由至上主義ユートピア」に集中し、人類が消滅・従属する側の未来を「望む」人はほぼゼロ。超知能（ASI）そのものは7割が「できてほしい」と答える一方、主導権は「人間とAIが共に」が過半数で、「AIに任せる」は1割未満。つまり多くの読者は<b>「超知能（ASI）は欲しい。でも決めるのは自分たちで」</b>と考えています。テグマークが第5章で問うているのは、まさにその両立が本当に可能か、という点です。</div>
+      <div class="block not"><b class="h">読むときの注意</b>本書の読者やFLIサイトの訪問者が自発的に答えたもので、世論調査ではありません（AIに関心の高い層に偏ります）。数値はこのページ作成者による概算で、FLI・テグマーク公式の集計値ではありません。回答期間中に集計は更新されており、ここに示したのは2022年10月時点の保存データです。</div>
+      <p class="credit">出典：Max Tegmark, “Superintelligence survey,” Future of Life Institute（2017年8月15日公開）<a href="https://futureoflife.org/ai/superintelligence-survey/" target="_blank" rel="noopener">futureoflife.org/ai/superintelligence-survey/</a>。グラフ画像の保存版：<a href="https://web.archive.org/web/20221021091641/https://space.mit.edu/home/tegmark/ai/LATEST_FIGS/scenarios.jpg" target="_blank" rel="noopener">Internet Archive（2022-10-21）</a>。グラフはこのページ用に描き直したもので、元画像の転載ではありません。</p>
+    </article>
   </section>
 
   <footer class="disclaimer">
     <p>本書の表5.1（超知能（ASI）の有無・人類の存在・誰が制御するか）の区分に沿って、判断の順に12シナリオを並べたもの。丸数字は第5章での登場順、「≒」は日本人向けの喩え。シナリオのボックスをクリックすると、ページ下部の該当する解説へ移動する。赤枠の分岐点は、ダリオ・アモデイ氏のエッセイ<a href="https://darioamodei.com/post/we-must-pace-the-frontier" target="_blank" rel="noopener">「We Must Pace the Frontier」</a>が直接扱っている判断で、付箋から解説へ移動できる。付箋の写真のクレジットはページ下部「参考資料」に記載。アモデイ氏の写真は <a href="https://commons.wikimedia.org/wiki/File:Dario_Amodei_at_TechCrunch_Disrupt_2023_01_(cropped_2).jpg" target="_blank" rel="noopener">TechCrunch撮影（Wikimedia Commons）</a>、<a href="https://creativecommons.org/licenses/by/2.0/" target="_blank" rel="noopener">CC BY 2.0</a>、トリミングして使用。</p>
-    <p>各解説・要約はこのページ作成者によるもので、原文の主張の順序・強調は必ずしも同じではありません。著者・研究者の肖像はいずれもWikimedia Commonsで確認したCCライセンスの写真をトリミングして使用しています（クレジットは各カードに記載）。</p>
+    <p>各解説・要約はこのページ作成者によるもので、原文の主張の順序・強調は必ずしも同じではありません。「世界の読者はどの未来を選んだか」の数値はFLI公開グラフからの概算で公式集計ではありません。「海外の読者はこう語った」は公開投稿の趣旨を紹介目的で要約したもので、原文の転載・逐語訳ではなく、各投稿者の見解はこのページの見解ではありません。掲載に問題がある場合は意見フォームからお知らせください。著者・研究者の肖像はいずれもWikimedia Commonsで確認したCCライセンスの写真をトリミングして使用しています（クレジットは各カードに記載）。</p>
   </footer>
 </div>
 <script>
@@ -562,6 +743,8 @@ flowchart TD
   window.addEventListener('load',fix); setTimeout(fix,1500); setTimeout(fix,4000);
 })();
 </script>
+
+
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js"></script>
 <script>mermaid.initialize({ startOnLoad: false, securityLevel: "loose" }); document.fonts.ready.then(() => mermaid.run());</script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "a25dd4ac63ec427dab230aafacffa80f"}'></script><!-- End Cloudflare Web Analytics -->
