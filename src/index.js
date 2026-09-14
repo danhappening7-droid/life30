@@ -89,10 +89,15 @@ export async function handleVote(request, env, ctx) {
   const want = validPick(body.want), likely = validPick(body.likely);
   if (!want || !likely) return json({ error: "pick" }, 400);
 
+  // 同じブラウザ（Cookie）からの再投票は「上書き」として扱う
   const cookies = parseCookies(request.headers.get("cookie"));
   if (cookies[COOKIE]) {
     const prev = await env.DB.prepare("SELECT want, likely FROM votes WHERE id = ?").bind(cookies[COOKIE]).first();
-    if (prev) return json({ error: "already", want: prev.want, likely: prev.likely }, 409);
+    if (prev) {
+      await env.DB.prepare("UPDATE votes SET want = ?, likely = ? WHERE id = ?").bind(want, likely, cookies[COOKIE]).run();
+      ctx.waitUntil(caches.default.delete(new Request(ORIGIN + "/api/results", { method: "GET" })));
+      return json({ ok: true, updated: true, id: cookies[COOKIE], want, likely, prev: { want: prev.want, likely: prev.likely } });
+    }
   }
   const ip = request.headers.get("cf-connecting-ip") || "0.0.0.0";
   const ip_hash = await sha256hex(ip + "|" + (env.IP_SALT || "12futures"));
