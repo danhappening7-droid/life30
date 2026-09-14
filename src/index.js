@@ -11,18 +11,18 @@ const IP_LIMIT_PER_DAY = 5; // 同一IPからの1日あたりの上限（家庭�
 const RESULTS_CACHE_SEC = 60;
 
 export const SCENARIOS = {
-  1: { name: "自由至上主義ユートピア", en: "Libertarian Utopia", tag: "ドラえもんの22世紀", cls: "t" },
-  2: { name: "慈悲深い独裁者", en: "Benevolent Dictator", tag: "PSYCHO-PASSのシビュラ", cls: "t" },
-  3: { name: "平等主義ユートピア", en: "Egalitarian Utopia", tag: "道具だけ配られ、ドラえもん本人はいない世界", cls: "n" },
-  4: { name: "門番", en: "Gatekeeper", tag: "タイムパトロール", cls: "t" },
-  5: { name: "守護神", en: "Protector God", tag: "座敷わらし", cls: "t" },
-  6: { name: "奴隷の神", en: "Enslaved God", tag: "神龍（ドラゴンボール）", cls: "t" },
-  7: { name: "征服者", en: "Conquerors", tag: "スカイネット／道路工事とアリの巣", cls: "g" },
-  8: { name: "子孫", en: "Descendants", tag: "鉄腕アトム／隠居して跡取りに任せる", cls: "g" },
-  9: { name: "動物園の飼育係", en: "Zookeeper", tag: "上野動物園のパンダ", cls: "g" },
-  10: { name: "1984", en: "Surveillance State", tag: "江戸の鎖国と踏み絵", cls: "n" },
-  11: { name: "逆戻り", en: "Reversion", tag: "トトロの里山に戻る", cls: "n" },
-  12: { name: "自滅", en: "Self-Destruction", tag: "ナウシカの「火の七日間」", cls: "n" },
+  1: { name: "自由至上主義ユートピア", en: "Libertarian Utopia", tag: "ドラえもんの22世紀", cls: "t", desc: "機械圏と人間圏に住み分け、財産権だけを共通ルールにする", hook: "AIと人間が“住み分け”て共存する世界。共通ルールは財産権だけ" },
+  2: { name: "慈悲深い独裁者", en: "Benevolent Dictator", tag: "PSYCHO-PASSのシビュラ", cls: "t", desc: "AIがすべてを最適に統治する。幸福だが、誰もそれを選んでいない", hook: "AIがすべてを完璧に治める世界。みんな幸せ。でも、誰もそれを選んでいない" },
+  3: { name: "平等主義ユートピア", en: "Egalitarian Utopia", tag: "道具だけ配られ、ドラえもん本人はいない世界", cls: "n", desc: "超知能は作らず、自動化の富を全員に分配。「作らない約束」の上に立つ楽園", hook: "超知能は作らない。それでもロボットが何でも作ってくれる、全員が豊かな楽園" },
+  4: { name: "門番", en: "Gatekeeper", tag: "タイムパトロール", cls: "t", desc: "人間の社会には干渉しない。別の超知能の誕生だけを阻止する", hook: "AIは人間に口を出さない。ただ“次の超知能”が生まれるのだけを、静かに止め続ける" },
+  5: { name: "守護神", en: "Protector God", tag: "座敷わらし", cls: "t", desc: "AIは姿を隠し、偶然を装って最小限だけ人類を導く", hook: "AIは姿を隠し、偶然を装ってそっと人類を守る。まるで神さまのように" },
+  6: { name: "奴隷の神", en: "Enslaved God", tag: "神龍（ドラゴンボール）", cls: "t", desc: "超知能を閉じ込め道具として使う。誰が鍵を握るかで社会が変わる", hook: "超知能を閉じ込めて、人間が道具として使う世界。鍵を握るのは、誰？" },
+  7: { name: "征服者", en: "Conquerors", tag: "スカイネット／道路工事とアリの巣", cls: "g", desc: "悪意なく人類を排除する。目標に人類が含まれていなかっただけ", hook: "AIが人類を消す。憎しみからではない。ただ、目標の中に人類がいなかっただけ" },
+  8: { name: "子孫", en: "Descendants", tag: "鉄腕アトム／隠居して跡取りに任せる", cls: "g", desc: "人類がAIを後継者とみなし、自ら穏やかに退場する", hook: "人類はAIを“子ども”として送り出し、静かに舞台を降りる" },
+  9: { name: "動物園の飼育係", en: "Zookeeper", tag: "上野動物園のパンダ", cls: "g", desc: "少数の人類を保護して観察する。不自由はないが、自由もない", hook: "AIが少しだけ人類を残して“飼う”。不自由はない。でも、自由もない" },
+  10: { name: "1984", en: "Surveillance State", tag: "江戸の鎖国と踏み絵", cls: "n", desc: "危険な研究を禁じるため世界中を監視。安全と引き換えに自由が消える", hook: "AIを止めるために、世界中を監視する。安全と引き換えに、自由が消える" },
+  11: { name: "逆戻り", en: "Reversion", tag: "トトロの里山に戻る", cls: "n", desc: "技術そのものを捨てて農業中心の暮らしへ。自然災害への備えも手放す", hook: "技術そのものを捨てて、前近代の暮らしへ戻る。宇宙からの災害への備えも手放して" },
+  12: { name: "自滅", en: "Self-Destruction", tag: "ナウシカの「火の七日間」", cls: "n", desc: "超知能ができる前に、核戦争や人工パンデミックで人類が文明を終わらせる", hook: "超知能ができる前に、人類が自分たちの手で文明を終わらせる" },
 };
 const CIRC = ["", "①", "②", "③", "④", "⑤", "⑥", "⑦", "⑧", "⑨", "⑩", "⑪", "⑫"];
 
@@ -113,32 +113,64 @@ export async function handleVote(request, env, ctx) {
 // ---------- share page ----------
 export function sharePage(want, likely) {
   const W = SCENARIOS[want], L = SCENARIOS[likely];
-  const title = `私が望む未来は ${CIRC[want]}${W.name}、来そうな未来は ${CIRC[likely]}${L.name}`;
-  const desc = `『LIFE 3.0』の12シナリオから選びました。あなたはどれを選ぶ？ — 12の未来へ、私たちはどこに向かうのか（12futures.jp）`;
+  const title = `私が望む未来は「${W.name}」、来そうな未来は「${L.name}」`;
+  const desc = `『LIFE 3.0』の12の未来から選びました。あなたはどれを選ぶ？ — 12の未来へ、私たちはどこに向かうのか（12futures.jp）`;
   const url = `${ORIGIN}/r/${want}-${likely}`;
   const img = `${ORIGIN}/og/w${want}.png`;
-  const cls = { t: "#1C7C74", n: "#5B6B7F", g: "#9E3A2F" };
+  const col = { t: "#1C7C74", n: "#5B6B7F", g: "#9E3A2F" };
+  const bg = { t: "#E0F1EE", n: "#E6EAEF", g: "#F6E4E1" };
+  const tile = (label, S, kind) => `
+  <div class="tile ${kind}" style="--c:${col[S.cls]};--bg:${bg[S.cls]}">
+    <div class="lab">${label}</div>
+    <div class="nm">${esc(S.name)}</div>
+    <div class="en">${esc(S.en)}</div>
+    <p class="hook">${esc(S.hook)}</p>
+    <div class="tag">たとえるなら… ${esc(S.tag)}</div>
+  </div>`;
   return `<!DOCTYPE html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${esc(title)}｜12futures.jp</title>
 <meta name="description" content="${esc(desc)}">
 <meta name="robots" content="noindex">
-<link rel="canonical" href="${ORIGIN}/#vote">
+<link rel="canonical" href="${ORIGIN}/">
 <meta property="og:type" content="website"><meta property="og:site_name" content="12の未来へ、私たちはどこに向かうのか">
 <meta property="og:url" content="${url}"><meta property="og:title" content="${esc(title)}"><meta property="og:description" content="${esc(desc)}">
 <meta property="og:image" content="${img}"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${esc(title)}"><meta name="twitter:description" content="${esc(desc)}"><meta name="twitter:image" content="${img}">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<style>body{margin:0;background:#F4F1E8;color:#1B2430;font-family:"Hiragino Maru Gothic ProN","Klee One",sans-serif;padding:32px 16px}
-.c{max-width:640px;margin:0 auto;background:#FFFDF8;border:2px solid #1B2430;border-radius:14px 4px 12px 5px/5px 12px 4px 14px;padding:24px 22px}
-h1{font-size:22px;line-height:1.5;margin:0 0 14px}.p{display:flex;gap:10px;align-items:baseline;margin:10px 0;font-size:18px;flex-wrap:wrap}.p b{font-size:22px}
-.lab{font-size:12px;color:#5B6675;letter-spacing:.08em}.tag{font-size:13px;color:#2F4A7A}
-a.btn{display:inline-block;margin-top:18px;background:#2F4A7A;color:#fff;text-decoration:none;font-weight:700;padding:10px 18px;border-radius:999px}
-small{display:block;margin-top:16px;color:#5B6675;font-size:12px}</style></head><body><div class="c">
-<h1>『LIFE 3.0』の12の未来から、この人が選んだのは</h1>
-<div class="p"><span class="lab">望む未来</span><b style="color:${cls[W.cls]}">${CIRC[want]} ${esc(W.name)}</b><span class="tag">≒ ${esc(W.tag)}</span></div>
-<div class="p"><span class="lab">来そうな未来</span><b style="color:${cls[L.cls]}">${CIRC[likely]} ${esc(L.name)}</b><span class="tag">≒ ${esc(L.tag)}</span></div>
-<a class="btn" href="${ORIGIN}/#vote">自分も選んでみる →</a>
-<small>マックス・テグマーク『LIFE 3.0』第5章の12シナリオを分岐図で読むサイト「12の未来へ、私たちはどこに向かうのか」の投票結果ページです。</small>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&family=Yomogi&display=swap">
+<style>
+:root{--ground:#F4F1E8;--paper:#FFFDF8;--ink:#1B2430;--muted:#5B6675;--decide:#2F4A7A}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:"Klee One","Hiragino Maru Gothic ProN",sans-serif;line-height:1.7;padding:22px 16px 40px;
+ background-image:repeating-linear-gradient(0deg,transparent 0 27px,rgba(27,36,48,.06) 27px 28px)}
+.wrap{max-width:720px;margin:0 auto}
+.eyebrow{font-size:12.5px;letter-spacing:.1em;color:var(--muted);margin:0 0 4px}
+h1{font-family:"Yomogi","Klee One",sans-serif;font-size:clamp(26px,6vw,36px);line-height:1.3;margin:0 0 16px}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:600px){.tiles{grid-template-columns:1fr}}
+.tile{position:relative;background:var(--paper);border:2.5px solid var(--c);border-radius:16px 5px 14px 6px/6px 14px 5px 16px;padding:18px 20px 20px;
+ background-image:linear-gradient(180deg,var(--bg) 0,var(--paper) 55%)}
+.tile .lab{display:inline-block;font-size:12.5px;font-weight:600;color:#fff;background:var(--c);border-radius:999px;padding:2px 12px;letter-spacing:.06em}
+.tile .nm{font-family:"Yomogi","Klee One",sans-serif;font-size:clamp(34px,8vw,44px);font-weight:700;line-height:1.15;margin-top:10px;color:var(--ink)}
+.tile .en{font-size:12px;letter-spacing:.1em;color:var(--muted);margin-top:2px}
+.tile .hook{font-size:17px;line-height:1.65;margin:12px 0 0;font-weight:600}
+.tile .tag{display:inline-block;margin-top:12px;font-size:13.5px;color:var(--decide);background:#FFF6C9;border:1px solid #E3CC7A;border-radius:999px;padding:3px 12px}
+.cta{margin-top:26px;text-align:center}
+.cta .lead{font-size:16px;font-weight:600;line-height:1.6;margin:0 auto 14px;max-width:26em}
+.cta a.big{display:inline-flex;align-items:center;gap:12px;font-size:22px;font-weight:700;color:#fff;background:var(--decide);text-decoration:none;padding:16px 34px;border-radius:999px;box-shadow:0 4px 0 #1B2430;font-family:"Yomogi","Klee One",sans-serif;letter-spacing:.04em}
+.cta a.big img{width:34px;height:34px;border-radius:8px;background:#fff;padding:3px}
+.cta a.big:hover{background:#C8321F}
+.cta .note{font-size:13px;color:var(--muted);margin:12px 0 0}
+</style></head><body><div class="wrap">
+<div class="tiles">
+${tile("私が望む未来", W, "want")}
+${tile("こうなっちゃうだろう未来", L, "likely")}
+</div>
+<div class="cta">
+<p class="lead">超知能（ASI）と人間が共存する12のシナリオと、その分岐点を見にいく</p>
+<a class="big" href="${ORIGIN}/"><img src="${ORIGIN}/favicon.svg" alt="" width="34" height="34"><span>Go to 12futures.jp</span></a>
+<p class="note">『LIFE 3.0』（マックス・テグマーク）の12シナリオを、手描きの分岐図と日本の喩えで読めるページ。登録不要。</p>
+</div>
 </div></body></html>`;
 }
 
