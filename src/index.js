@@ -4,6 +4,8 @@
 //       (3) 共有ページ GET /r/{want}-{likely}  (動的 OG タグ付き)
 //       (4) それ以外は静的アセット(ASSETS)を配信
 
+import { handleComment, handleComments, handleAdmin } from "./comments.js";
+
 const CANONICAL_HOST = "12futures.jp";
 const ORIGIN = "https://" + CANONICAL_HOST;
 const COOKIE = "v12";
@@ -193,6 +195,9 @@ export default {
     // (2) API
     if (url.pathname === "/api/vote") return handleVote(request, env, ctx);
     if (url.pathname === "/api/results") return handleResults(request, env, ctx);
+    if (url.pathname === "/api/comment") return handleComment(request, env, ctx);
+    if (url.pathname === "/api/comments") return handleComments(request, env, ctx);
+    if (url.pathname === "/admin" || url.pathname.startsWith("/admin/")) return handleAdmin(request, env, ctx);
 
     // (3) share page
     const m = url.pathname.match(/^\/r\/(\d{1,2})-(\d{1,2})\/?$/);
